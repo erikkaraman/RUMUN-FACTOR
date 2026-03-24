@@ -3,14 +3,11 @@
    ============================================================ */
 
 const formState = {
-  step1: { fname: '', lname: '', dob: '', city: '', email: '', phone: '' },
-  step2: { cat: '', genre: '', song: '', story: '' },
-  step3: { videourl: '', videofile: null },
-  step4: { cb1: false, cb2: false, cb3: false, cb4: false },
+  fname: '', lname: '', dob: '', city: '', email: '', phone: '',
+  cat: '', genre: '', story: '',
+  videourl: '', videofile: null,
+  cb1: false, cb2: false, cb3: false, cb4: false,
 };
-
-let currentStep     = 1;
-let maxUnlockedStep = 1;
 
 /* ============================================================
    2. HELPERS
@@ -22,7 +19,6 @@ function isEmail(v) {
 
 function isPhone(v) {
   if (!v) return false;
-  // Прибираємо пробіли, дужки, дефіси — потім перевіряємо румунський формат
   const clean = v.replace(/[\s\-()]/g, '');
   return /^(\+40|0)7\d{8}$/.test(clean);
 }
@@ -39,10 +35,9 @@ function isAdult(dob) {
 }
 
 function isVideoValid() {
-  return formState.step3.videourl !== '' || formState.step3.videofile !== null;
+  return formState.videourl !== '' || formState.videofile !== null;
 }
 
-/* Скролимо до елемента з відступом на висоту sticky nav */
 function scrollToEl(el) {
   if (!el) return;
   const navH = document.querySelector('nav')?.offsetHeight ?? 0;
@@ -50,8 +45,11 @@ function scrollToEl(el) {
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
-/* Встановлюємо/знімаємо стан помилки на полі */
-function setError(fieldId, show, msg = '') {
+/* ============================================================
+   3. ERROR STATE
+   ============================================================ */
+
+function setError(fieldId, show, msg) {
   const f = document.getElementById('f-' + fieldId);
   if (!f) return;
   const err = f.querySelector('.field-error');
@@ -59,6 +57,7 @@ function setError(fieldId, show, msg = '') {
 
   if (show) {
     f.classList.add('has-error');
+    f.classList.remove('valid');
     if (msg) err.textContent = msg;
     err.style.display = 'block';
   } else {
@@ -67,159 +66,181 @@ function setError(fieldId, show, msg = '') {
   }
 }
 
-/* ============================================================
-   3. VALIDATION
-   ============================================================ */
+/* Показуємо помилку лише якщо поле вже "торкнули" (blur або спроба сабміту) */
+const touched = new Set();
 
-/* Перевіряє крок без показу помилок — для стану кнопки */
-function isStepValid(step) {
-  const d1 = formState.step1;
-  const d2 = formState.step2;
-  const d4 = formState.step4;
+function validateField(id) {
+  if (!touched.has(id)) return;
 
-  if (step === 1) return !!(d1.fname && d1.lname && d1.city && isPhone(d1.phone) && isEmail(d1.email) && isAdult(d1.dob));
-  if (step === 2) return !!(d2.cat && d2.genre && d2.song && d2.story.length >= 100);
-  if (step === 3) return isVideoValid();
-  if (step === 4) return !!(d4.cb1 && d4.cb2 && d4.cb3);
-  return false;
+  switch (id) {
+    case 'fname':  setError('fname', !formState.fname); break;
+    case 'lname':  setError('lname', !formState.lname); break;
+    case 'city':   setError('city',  !formState.city);  break;
+    case 'phone':  setError('phone', !isPhone(formState.phone),  'Формат: +40 7xx xxx xxx або 07xx xxx xxx'); break;
+    case 'email':  setError('email', !isEmail(formState.email),  'Некоректний email'); break;
+    case 'dob':    setError('dob',   !isAdult(formState.dob),    'Мінімальний вік — 16 років'); break;
+    case 'cat':    setError('cat',   !formState.cat,             'Оберіть категорію'); break;
+    case 'genre':  setError('genre', !formState.genre); break;
+    case 'story':  setError('story', formState.story.length < 100, 'Мінімум 100 символів'); break;
+    case 'video':  setError('video', !isVideoValid(),             'Додайте посилання або завантажте файл'); break;
+  }
 }
 
-/* Перевіряє крок і показує помилки на полях */
-function validateStep(step) {
-  if (step === 1) {
-    const d = formState.step1;
-    setError('fname', !d.fname);
-    setError('lname', !d.lname);
-    setError('city',  !d.city);
-    setError('phone', !isPhone(d.phone),  'Формат: +40 7xx xxx xxx або 07xx xxx xxx');
-    setError('email', !isEmail(d.email),  'Некоректний email');
-    setError('dob',   !isAdult(d.dob),    'Мінімальний вік — 16 років');
-  }
+/* Повна валідація всіх полів (при сабміті — торкаємо всі) */
+function validateAll() {
+  const allFields = ['fname','lname','dob','city','email','phone','cat','genre','story','video'];
+  allFields.forEach(id => touched.add(id));
+  allFields.forEach(id => validateField(id));
 
-  if (step === 2) {
-    const d = formState.step2;
-    setError('cat',   !d.cat,                  'Оберіть категорію');
-    setError('genre', !d.genre);
-    setError('song',  !d.song);
-    setError('story', d.story.length < 100,    'Мінімум 100 символів');
-  }
+  ['cb1','cb2','cb3'].forEach(id => {
+    const f  = document.getElementById('f-' + id);
+    const cb = document.getElementById(id);
+    if (!f || !cb) return;
+    const err = f.querySelector('.field-error');
+    if (cb.checked) {
+      f.classList.remove('has-error');
+      if (err) err.style.display = 'none';
+    } else {
+      f.classList.add('has-error');
+      if (err) err.style.display = 'block';
+    }
+  });
 
-  if (step === 3) {
-    setError('video', !isVideoValid(), 'Додайте відео');
-  }
+  return isFormValid();
+}
 
-  if (step === 4) {
-    ['cb1', 'cb2', 'cb3'].forEach(id => {
-      const f  = document.getElementById('f-' + id);
-      const cb = document.getElementById(id);
-      if (!f || !cb) return;
-      const err = f.querySelector('.field-error');
-      if (cb.checked) {
-        f.classList.remove('has-error');
-        if (err) err.style.display = 'none';
-      } else {
-        f.classList.add('has-error');
-        if (err) err.style.display = 'block';
-      }
-    });
-  }
-
-  return isStepValid(step);
+function isFormValid() {
+  return !!(
+    formState.fname && formState.lname && formState.city &&
+    isPhone(formState.phone) && isEmail(formState.email) && isAdult(formState.dob) &&
+    formState.cat && formState.genre && formState.story.length >= 100 &&
+    isVideoValid() &&
+    formState.cb1 && formState.cb2 && formState.cb3
+  );
 }
 
 /* ============================================================
-   4. FORM — INPUT BINDING
+   4. INPUT BINDING
    ============================================================ */
 
 function bindInputs() {
 
-  // Step 1 — текстові поля
+  // Текстові поля — step 1
   ['fname', 'lname', 'city', 'phone', 'email'].forEach(id => {
-    document.getElementById(id)?.addEventListener('input', e => {
-      formState.step1[id] = e.target.value.trim();
-      validateStep(currentStep);
-      updateButtons();
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', e => {
+      formState[id] = e.target.value.trim();
+      validateField(id);
+    });
+    el.addEventListener('blur', () => {
+      touched.add(id);
+      validateField(id);
     });
   });
 
-  // Step 1 — дата (Safari не стріляє 'input' на date picker, тільки 'change')
-  document.getElementById('dob')?.addEventListener('change', e => {
-    formState.step1.dob = e.target.value;
-    validateStep(currentStep);
-    updateButtons();
-  });
-
-  // Step 2 — текстові поля
-  ['genre', 'song'].forEach(id => {
-    document.getElementById(id)?.addEventListener('input', e => {
-      formState.step2[id] = e.target.value.trim();
-      validateStep(currentStep);
-      updateButtons();
+  // Дата — Safari стріляє тільки 'change'
+  const dobEl = document.getElementById('dob');
+  if (dobEl) {
+    dobEl.addEventListener('change', e => {
+      formState.dob = e.target.value;
+      touched.add('dob');
+      validateField('dob');
     });
-  });
+    dobEl.addEventListener('blur', () => {
+      touched.add('dob');
+      validateField('dob');
+    });
+  }
 
-  // Step 2 — select категорії
+  // Категорія
   document.getElementById('cat')?.addEventListener('change', e => {
-    formState.step2.cat = e.target.value;
-    validateStep(currentStep);
-    updateButtons();
+    formState.cat = e.target.value;
+    touched.add('cat');
+    validateField('cat');
   });
 
-  // Step 2 — textarea (trimEnd узгоджено з updateCount)
-  document.getElementById('story')?.addEventListener('input', e => {
-    formState.step2.story = e.target.value.trimEnd();
-    updateCount();
-    validateStep(currentStep);
-    updateButtons();
-  });
+  // Жанр
+  const genreEl = document.getElementById('genre');
+  if (genreEl) {
+    genreEl.addEventListener('input', e => {
+      formState.genre = e.target.value.trim();
+      validateField('genre');
+    });
+    genreEl.addEventListener('blur', () => {
+      touched.add('genre');
+      validateField('genre');
+    });
+  }
 
-  // Step 3 — відео URL
-  document.getElementById('videourl')?.addEventListener('input', e => {
-    formState.step3.videourl = e.target.value.trim();
-    validateStep(currentStep);
-    updateButtons();
-  });
+  // Textarea "Про себе"
+  const storyEl = document.getElementById('story');
+  if (storyEl) {
+    storyEl.addEventListener('input', e => {
+      formState.story = e.target.value.trimEnd();
+      updateCount();
+      validateField('story');
+    });
+    storyEl.addEventListener('blur', () => {
+      touched.add('story');
+      validateField('story');
+    });
+  }
 
-  // Step 3 — файл відео
+  // Відео URL
+  const videourlEl = document.getElementById('videourl');
+  if (videourlEl) {
+    videourlEl.addEventListener('input', e => {
+      formState.videourl = e.target.value.trim();
+      touched.add('video');
+      validateField('video');
+    });
+  }
+
+  // Файл відео
   document.getElementById('videofile')?.addEventListener('change', e => {
     const file = e.target.files[0];
+    touched.add('video');
 
     if (!file) {
-      formState.step3.videofile = null;
-      updateButtons();
+      formState.videofile = null;
+      updateFileDrop(null);
+      validateField('video');
       return;
     }
 
     if (file.size > 500 * 1024 * 1024) {
       alert('Файл занадто великий. Максимум — 500 МБ');
       e.target.value = '';
-      formState.step3.videofile = null;
-      updateButtons();
+      formState.videofile = null;
+      updateFileDrop(null);
+      validateField('video');
       return;
     }
 
     if (!['video/mp4', 'video/quicktime'].includes(file.type)) {
       alert('Невірний формат. Підтримуються MP4 та MOV');
       e.target.value = '';
-      formState.step3.videofile = null;
-      updateButtons();
+      formState.videofile = null;
+      updateFileDrop(null);
+      validateField('video');
       return;
     }
 
-    formState.step3.videofile = file;
-    updateButtons();
+    formState.videofile = file;
+    updateFileDrop(file);
+    validateField('video');
   });
 
-  // Step 4 — чекбокси
+  // Чекбокси
   ['cb1', 'cb2', 'cb3', 'cb4'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', e => {
-      formState.step4[id] = e.target.checked;
-      updateButtons();
+      formState[id] = e.target.checked;
     });
   });
 }
 
-/* Оновлює лічильник символів у полі "Твоя історія" */
+/* Оновлює лічильник символів */
 function updateCount() {
   const val   = document.getElementById('story')?.value ?? '';
   const count = val.trimEnd().length;
@@ -229,130 +250,86 @@ function updateCount() {
   el.style.color = count >= 100 ? 'var(--gold)' : 'var(--muted)';
 }
 
-/* Оновлює disabled-стан кнопок "Далі" */
-function updateButtons() {
-  for (let i = 1; i <= 4; i++) {
-    const btn = document.querySelector('#acc' + i + ' .acc-next');
-    if (btn) btn.disabled = !isStepValid(i);
+/* Оновлює вигляд зони завантаження файлу */
+function updateFileDrop(file) {
+  const textEl = document.getElementById('fileDropText');
+  const dropEl = document.getElementById('fileDrop');
+  if (!textEl || !dropEl) return;
+
+  if (file) {
+    const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+    textEl.innerHTML = `<span class="file-drop-icon file-drop-icon--ok">✓</span><span>${file.name} · ${sizeMB} МБ</span>`;
+    dropEl.classList.add('has-file');
+  } else {
+    textEl.innerHTML = `<span class="file-drop-icon">↑</span><span>Натисни або перетягни файл сюди</span>`;
+    dropEl.classList.remove('has-file');
   }
 }
 
 /* ============================================================
-   5. ACCORDION
+   5. DRAG & DROP
    ============================================================ */
 
-function openStep(step) {
-  // Закриваємо всі body
-  document.querySelectorAll('.acc-body').forEach(el => el.classList.remove('open'));
-  // Скидаємо active з усіх header
-  document.querySelectorAll('.acc-header').forEach(el => el.classList.remove('active'));
+function bindDragDrop() {
+  const drop = document.getElementById('fileDrop');
+  if (!drop) return;
 
-  // Відновлюємо done на пройдених кроках
-  for (let i = 1; i < step; i++) {
-    document.getElementById('h' + i)?.classList.add('done');
-  }
+  ['dragenter', 'dragover'].forEach(ev => {
+    drop.addEventListener(ev, e => {
+      e.preventDefault();
+      drop.classList.add('drag-over');
+    });
+  });
 
-  // Відкриваємо потрібний крок
-  document.getElementById('b' + step)?.classList.add('open');
-  document.getElementById('h' + step)?.classList.add('active');
+  ['dragleave', 'drop'].forEach(ev => {
+    drop.addEventListener(ev, e => {
+      e.preventDefault();
+      drop.classList.remove('drag-over');
+    });
+  });
 
-  currentStep = step;
-  updateProgress(step);
-}
+  drop.addEventListener('drop', e => {
+    const file = e.dataTransfer?.files[0];
+    if (!file) return;
 
-function nextStep(step) {
-  if (!validateStep(step)) return;
+    const input = document.getElementById('videofile');
 
-  setSummary(step);
+    if (file.size > 500 * 1024 * 1024) {
+      alert('Файл занадто великий. Максимум — 500 МБ');
+      return;
+    }
+    if (!['video/mp4', 'video/quicktime'].includes(file.type)) {
+      alert('Невірний формат. Підтримуються MP4 та MOV');
+      return;
+    }
 
-  // Позначаємо поточний крок як done
-  const num  = document.querySelector('#h' + step + ' .acc-num');
-  const head = document.getElementById('h' + step);
-  if (num)  num.textContent = '✔';
-  if (head) head.classList.add('done');
+    formState.videofile = file;
+    touched.add('video');
+    updateFileDrop(file);
+    validateField('video');
 
-  if (step < 4) {
-    maxUnlockedStep = Math.max(maxUnlockedStep, step + 1);
-    openStep(step + 1);
-
-    // Чекаємо завершення accordion transition (~400ms), потім скролимо
-    setTimeout(() => {
-      scrollToEl(document.getElementById('h' + (step + 1)));
-    }, 420);
-  }
-}
-
-function jumpTo(step) {
-  // Назад — завжди можна
-  if (step <= currentStep) {
-    openStep(step);
-    return;
-  }
-  // Вперед — тільки якщо розблоковано
-  if (step <= maxUnlockedStep) {
-    openStep(step);
-  }
-}
-
-/* Заповнює summary в header пройденого кроку */
-function setSummary(step) {
-  const sum = document.getElementById('sum' + step);
-  if (!sum) return;
-
-  let text = '';
-  if (step === 1) {
-    const d = formState.step1;
-    text = `${d.fname} ${d.lname}, ${d.city}`;
-  } else if (step === 2) {
-    const d = formState.step2;
-    text = `${d.cat} · ${d.song}`;
-  } else if (step === 3) {
-    text = formState.step3.videourl ? '✓ посилання' : '✓ файл';
-  }
-
-  sum.textContent = text;
-  sum.classList.add('visible');
+    // Синхронізуємо з input якщо браузер підтримує DataTransfer
+    try {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      if (input) input.files = dt.files;
+    } catch (_) {}
+  });
 }
 
 /* ============================================================
-   6. PROGRESS BAR
-   ============================================================ */
-
-function updateProgress(step) {
-  for (let i = 1; i <= 4; i++) {
-    const ps  = document.getElementById('ps' + i);
-    const pl  = document.getElementById('pl' + i);
-    if (!ps) continue;
-
-    const dot = ps.querySelector('.prog-dot');
-
-    ps.classList.remove('active', 'done', 'locked');
-
-    if (i < step)      ps.classList.add('done');
-    else if (i === step) ps.classList.add('active');
-
-    if (pl) {
-      pl.classList.toggle('done', i < step);
-    }
-
-    if (dot) {
-      dot.textContent = i < step ? '✓' : i;
-    }
-
-    if (i > maxUnlockedStep) {
-      ps.classList.add('locked');
-    }
-  }
-}
-
-/* ============================================================
-   7. SUBMIT
+   6. SUBMIT
    ============================================================ */
 
 function submitForm() {
-  if (!validateStep(4)) return;
+  if (!validateAll()) {
+    // Знаходимо перший елемент з помилкою і скролимо до нього
+    const firstErr = document.querySelector('.has-error');
+    if (firstErr) scrollToEl(firstErr);
+    return;
+  }
 
-  const btn = document.querySelector('#acc4 .acc-next');
+  const btn = document.getElementById('btnSubmit');
   if (btn) {
     btn.textContent = 'Відправка...';
     btn.disabled    = true;
@@ -363,11 +340,9 @@ function submitForm() {
     const successNum = document.getElementById('success-num');
     if (successNum) successNum.textContent = num;
 
-    // Ховаємо progress bar і всі accordion
-    document.querySelector('.form-progress')?.style.setProperty('display', 'none');
-    for (let i = 1; i <= 4; i++) {
-      document.getElementById('acc' + i)?.style.setProperty('display', 'none');
-    }
+    // Ховаємо форму
+    const formBody = document.getElementById('formBody');
+    if (formBody) formBody.style.display = 'none';
 
     // Показуємо success screen
     const s = document.getElementById('success');
@@ -379,7 +354,7 @@ function submitForm() {
 }
 
 /* ============================================================
-   8. NAVIGATION
+   7. NAVIGATION
    ============================================================ */
 
 function smoothTo(id) {
@@ -397,7 +372,7 @@ function closeNav() {
 }
 
 /* ============================================================
-   9. INIT
+   8. INIT
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -435,27 +410,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Progress bar clicks
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('ps' + i)?.addEventListener('click', () => jumpTo(i));
-  }
+  // Submit button
+  document.getElementById('btnSubmit')?.addEventListener('click', () => submitForm());
 
-  // Accordion header clicks
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('h' + i)?.addEventListener('click', () => jumpTo(i));
-  }
-
-  // "Далі" buttons
-  document.querySelector('#acc1 .acc-next')?.addEventListener('click', () => nextStep(1));
-  document.querySelector('#acc2 .acc-next')?.addEventListener('click', () => nextStep(2));
-  document.querySelector('#acc3 .acc-next')?.addEventListener('click', () => nextStep(3));
-
-  // Submit
-  document.querySelector('#acc4 .acc-next')?.addEventListener('click', () => submitForm());
-
-  // Init form
+  // Init
   bindInputs();
-  openStep(1);
-  updateButtons();
-  updateProgress(1);
+  bindDragDrop();
+  updateCount();
 });

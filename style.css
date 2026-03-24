@@ -36,7 +36,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* max-width для 4K — без overflow:hidden, щоб nav sticky працював */
 .page-wrap {
   max-width: 1920px;
   margin: 0 auto;
@@ -185,7 +184,7 @@ nav ul li a:hover {
 }
 
 /* Focus visible — доступність клавіатури */
-.acc-next:focus-visible,
+.btn-submit:focus-visible,
 .btn-primary:focus-visible,
 .btn-secondary:focus-visible,
 .nav-cta:focus-visible {
@@ -209,7 +208,7 @@ nav ul li a:hover {
   overflow: hidden;
 }
 
-/* Градієнт зверху — підзаголовок читається на фото */
+/* Градієнт зверху */
 .hero::before {
   content: '';
   position: absolute;
@@ -220,7 +219,7 @@ nav ul li a:hover {
   pointer-events: none;
 }
 
-/* Градієнт знизу — кнопки і тег читаються на фото */
+/* Градієнт знизу */
 .hero::after {
   content: '';
   position: absolute;
@@ -237,7 +236,6 @@ nav ul li a:hover {
   background: url("images/hero-bg.avif") center / cover no-repeat;
 }
 
-/* Мобільний фон — прихований за замовчуванням */
 .hero-bg-mobile {
   display: none;
   position: absolute;
@@ -245,7 +243,6 @@ nav ul li a:hover {
   background: url("images/hero-bg-mobile.avif") center / cover no-repeat;
 }
 
-/* Горизонтальні лінії поверх фото */
 .hero-lines {
   position: absolute;
   inset: 0;
@@ -258,7 +255,6 @@ nav ul li a:hover {
   );
 }
 
-/* Підзаголовок — зверху hero */
 .hero-sub {
   position: relative;
   z-index: 1;
@@ -276,12 +272,10 @@ nav ul li a:hover {
   font-weight: 400;
 }
 
-/* Порожній простір — місце для лого на фото */
 .hero-logo-space {
   flex: 1;
 }
 
-/* Нижній блок — тег + кнопки */
 .hero-bottom {
   display: flex;
   flex-direction: column;
@@ -292,7 +286,6 @@ nav ul li a:hover {
   filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
 }
 
-/* Тег "Реєстрація відкрита" */
 .hero-tag {
   display: inline-flex;
   align-items: center;
@@ -332,7 +325,6 @@ nav ul li a:hover {
   z-index: 1;
 }
 
-/* Scroll-індикатор */
 .hero-scroll {
   position: absolute;
   bottom: 28px;
@@ -511,7 +503,6 @@ nav ul li a:hover {
   position: relative;
 }
 
-/* Горизонтальна лінія між кроками */
 .steps::before {
   content: '';
   position: absolute;
@@ -558,7 +549,7 @@ nav ul li a:hover {
 }
 
 /* ============================================================
-   10. REGISTRATION FORM
+   10. REGISTRATION FORM — SINGLE STEP
    ============================================================ */
 
 .reg-section {
@@ -567,7 +558,7 @@ nav ul li a:hover {
   margin: 0 auto;
 }
 
-/* Обгортка форми у стилі браузерного вікна */
+/* Обгортка у стилі браузерного вікна */
 .form-preview {
   border: 1px solid var(--mid);
   background: var(--dark3);
@@ -583,7 +574,6 @@ nav ul li a:hover {
   border-bottom: 1px solid rgba(201, 168, 76, 0.1);
 }
 
-/* Кольорові крапки у header форми */
 .dot {
   width: 10px;
   height: 10px;
@@ -602,163 +592,32 @@ nav ul li a:hover {
   text-transform: uppercase;
 }
 
-/* --- Progress bar --- */
+/* --- Form body --- */
 
-.form-progress {
-  display: flex;
-  align-items: center;
-  padding: 16px 24px;
-  gap: 0;
-  background: rgba(0, 0, 0, 0.2);
+.form-body {
+  padding: 0;
 }
 
-.prog-step {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.3s;
-  cursor: pointer;
+/* --- Секції форми --- */
+
+.form-block {
+  padding: 28px 28px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.prog-step.locked {
-  opacity: 0.4;
-  cursor: not-allowed;
+.form-block--last {
+  border-bottom: none;
+  padding-bottom: 28px;
 }
 
-.prog-step.done   { color: var(--gold); }
-.prog-step.active { color: var(--text); }
-
-.prog-dot {
-  width: 22px;
-  height: 22px;
-  border: 1px solid var(--mid);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--display);
-  font-size: 13px;
-  color: var(--muted);
-  transition: all 0.3s;
-  flex-shrink: 0;
-}
-
-.prog-step.done .prog-dot {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(201, 168, 76, 0.08);
-}
-
-.prog-step.active .prog-dot {
-  border-color: var(--text);
-  color: var(--text);
-}
-
-.prog-line {
-  flex: 1;
-  height: 1px;
-  background: var(--mid);
-  margin: 0 8px;
-  min-width: 12px;
-  transition: background 0.3s;
-}
-
-.prog-line.done {
-  background: rgba(201, 168, 76, 0.4);
-}
-
-/* --- Accordion --- */
-
-.accordion {
-  border-bottom: 1px solid var(--mid);
-}
-
-.acc-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 24px;
-  cursor: pointer;
-  background: var(--dark3);
-  transition: background 0.15s;
-  user-select: none;
-}
-
-.acc-header:hover {
-  background: var(--mid);
-}
-
-.acc-num {
-  width: 28px;
-  height: 28px;
-  border: 1px solid rgba(201, 168, 76, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--display);
-  font-size: 16px;
-  color: var(--gold);
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-
-.acc-header.active .acc-num { background: var(--gold); color: var(--dark); }
-.acc-header.done   .acc-num { background: rgba(201, 168, 76, 0.15); color: var(--gold); }
-
-.acc-title {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-.acc-summary {
-  font-size: 12px;
-  color: var(--gold);
-  margin-left: auto;
-  opacity: 0;
-  transition: opacity 0.3s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-  min-width: 0;
-  flex-shrink: 1;
-}
-
-.acc-summary.visible {
-  opacity: 1;
-}
-
-.acc-arrow {
-  margin-left: 12px;
+.form-block-label {
   font-size: 10px;
-  color: var(--muted);
-  transition: transform 0.25s;
-  flex-shrink: 0;
-}
-
-.acc-header.active .acc-arrow {
-  transform: rotate(180deg);
-}
-
-.acc-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.acc-body.open {
-  max-height: 2000px;
-}
-
-.acc-body-inner {
-  padding: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
 }
 
 /* --- Form fields --- */
@@ -820,20 +679,6 @@ nav ul li a:hover {
   background-position: right 12px center;
 }
 
-/* Valid field — зелений бордер і галочка */
-.field.valid input,
-.field.valid select,
-.field.valid textarea {
-  border-color: #3A7D44 !important;
-}
-
-.field.valid input:not([type="date"]):not([type="file"]):not([type="number"]),
-.field.valid select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10'%3E%3Cpath d='M1 5l3 3 7-7' stroke='%233A7D44' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-}
-
 /* Error state */
 .field-error {
   font-size: 11px;
@@ -852,16 +697,7 @@ nav ul li a:hover {
   border-color: rgba(184, 35, 42, 0.7);
 }
 
-/* File input */
-.field-file input[type="file"] {
-  padding: 10px 0;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-}
-
-/* Label hint — дрібний текст поряд з label */
+/* Label hint */
 .label-hint {
   font-size: 11px;
   font-weight: 300;
@@ -879,40 +715,88 @@ nav ul li a:hover {
   color: var(--muted);
 }
 
-/* --- Кнопка "Далі" --- */
+/* --- Video divider --- */
 
-.acc-next {
-  background: var(--gold);
-  color: var(--dark);
-  border: none;
-  padding: 10px 28px;
-  font-family: var(--body);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: all 0.2s;
-}
-
-.acc-next:hover:not(:disabled) {
-  background: var(--gold-light);
-}
-
-.acc-next:disabled {
-  background: var(--mid);
+.video-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 16px;
   color: var(--muted);
-  cursor: not-allowed;
-  opacity: 0.5;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-/* Кнопка "Надіслати заявку" — ширша версія acc-next */
-.acc-next--submit {
+.video-divider::before,
+.video-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--mid);
+}
+
+/* --- File drop zone --- */
+
+.file-drop {
+  position: relative;
+  border: 1px dashed var(--mid);
+  background: var(--dark);
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  overflow: hidden;
+}
+
+.file-drop input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
   width: 100%;
-  padding: 16px;
-  font-size: 14px;
-  letter-spacing: 2px;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.file-drop-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.file-drop-icon {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.file-drop-icon--ok {
+  color: #3A7D44;
+}
+
+.file-drop:hover {
+  border-color: rgba(201, 168, 76, 0.4);
+  background: rgba(201, 168, 76, 0.03);
+}
+
+.file-drop.drag-over {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.file-drop.has-file {
+  border-color: rgba(58, 125, 68, 0.5);
+  border-style: solid;
+}
+
+.file-drop.has-file .file-drop-text {
+  color: var(--text);
 }
 
 /* --- Checkbox labels --- */
@@ -946,12 +830,49 @@ nav ul li a:hover {
   color: var(--text);
 }
 
+/* Необов'язкова згода — менш помітна */
+.consent-label--optional {
+  opacity: 0.6;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
 .consent-note {
   font-size: 11px;
   color: var(--muted);
   margin-top: 12px;
   text-align: center;
   letter-spacing: 0.3px;
+}
+
+/* --- Submit button --- */
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit:hover {
+  background: var(--gold-light);
+}
+
+.btn-submit:disabled {
+  background: var(--mid);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* --- Success screen --- */
@@ -1085,7 +1006,7 @@ footer {
 
   nav ul li a {
     display: block;
-    padding: 14px 24px; /* мін. 44px touch target */
+    padding: 14px 24px;
     font-size: 15px;
     letter-spacing: 0.5px;
   }
@@ -1129,24 +1050,10 @@ footer {
   .step-title { margin-bottom: 4px; }
 
   /* Form */
-  .reg-section { padding: 56px 20px; }
-  .form-row    { grid-template-columns: 1fr; }
-
-  .form-progress {
-    padding: 12px 16px;
-    gap: 4px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .prog-step span { display: none; }
-  .prog-dot  { width: 30px; height: 30px; font-size: 14px; }
-  .prog-line { min-width: 8px; }
-
-  .acc-header     { padding: 14px 16px; gap: 12px; min-height: 52px; }
-  .acc-body-inner { padding: 16px; }
-  .acc-summary    { max-width: 100px; }
+  .reg-section  { padding: 56px 20px; }
+  .form-row     { grid-template-columns: 1fr; }
+  .form-block   { padding: 20px 16px 4px; }
+  .form-block--last { padding-bottom: 20px; }
 
   .field textarea { min-height: 120px; }
 
@@ -1166,10 +1073,7 @@ footer {
    ============================================================ */
 
 @media (max-width: 380px) {
-  .cats          { grid-template-columns: 1fr; }
-  .acc-summary   { display: none; }
-  .form-progress { gap: 2px; padding: 10px 12px; }
-  .prog-line     { min-width: 4px; }
+  .cats { grid-template-columns: 1fr; }
 
   .btn-primary,
   .btn-secondary { max-width: 100%; }

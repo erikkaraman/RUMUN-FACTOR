@@ -162,7 +162,7 @@
   </div>
 
   <!-- ============================================================
-       REGISTRATION FORM
+       REGISTRATION FORM — SINGLE STEP
        ============================================================ -->
   <section class="reg-section" id="register">
     <div class="section-label">Форма реєстрації</div>
@@ -178,246 +178,172 @@
         <div class="form-header-title">Реєстрація · rumun-factor.ro</div>
       </div>
 
-      <!-- Progress bar -->
-      <div class="form-progress">
-        <div class="prog-step active" id="ps1">
-          <div class="prog-dot">1</div>
-          <span>Дані</span>
-        </div>
-        <div class="prog-line" id="pl1"></div>
-        <div class="prog-step" id="ps2">
-          <div class="prog-dot">2</div>
-          <span>Талант</span>
-        </div>
-        <div class="prog-line" id="pl2"></div>
-        <div class="prog-step" id="ps3">
-          <div class="prog-dot">3</div>
-          <span>Відео</span>
-        </div>
-        <div class="prog-line" id="pl3"></div>
-        <div class="prog-step" id="ps4">
-          <div class="prog-dot">4</div>
-          <span>Згода</span>
-        </div>
-      </div>
+      <div class="form-body" id="formBody">
 
-      <!-- STEP 1: Особисті дані -->
-      <div class="accordion" id="acc1">
-        <div class="acc-header active" id="h1">
-          <div class="acc-num">1</div>
-          <div class="acc-title">Особисті дані</div>
-          <span class="acc-summary" id="sum1"></span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body open" id="b1">
-          <div class="acc-body-inner">
+        <!-- ——— БЛОК 1: Особисті дані ——— -->
+        <div class="form-block">
+          <div class="form-block-label">Особисті дані</div>
 
-            <div class="form-row">
-              <div class="field" id="f-fname">
-                <label>Ім'я <span class="required">*</span></label>
-                <input type="text" id="fname" placeholder="Андрій">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
-              <div class="field" id="f-lname">
-                <label>Прізвище <span class="required">*</span></label>
-                <input type="text" id="lname" placeholder="Попеску">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
+          <div class="form-row">
+            <div class="field" id="f-fname">
+              <label>Ім'я <span class="required">*</span></label>
+              <input type="text" id="fname" placeholder="Андрій" autocomplete="given-name">
+              <div class="field-error">Обов'язкове поле</div>
             </div>
-
-            <div class="form-row">
-              <div class="field" id="f-dob">
-                <label>Дата народження <span class="required">*</span></label>
-                <input type="date" id="dob">
-                <div class="field-error" id="dob-err">Мінімальний вік — 16 років</div>
-              </div>
-              <div class="field" id="f-city">
-                <label>Місто / Жудець <span class="required">*</span></label>
-                <input type="text" id="city" placeholder="Cluj-Napoca">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
+            <div class="field" id="f-lname">
+              <label>Прізвище <span class="required">*</span></label>
+              <input type="text" id="lname" placeholder="Попеску" autocomplete="family-name">
+              <div class="field-error">Обов'язкове поле</div>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="field" id="f-email">
-                <label>Email <span class="required">*</span></label>
-                <input type="email" id="email" placeholder="andrei@email.com">
-                <div class="field-error">Введіть коректний email</div>
-              </div>
-              <div class="field" id="f-phone">
-                <label>Телефон <span class="required">*</span></label>
-                <input type="tel" id="phone" placeholder="+40 700 000 000">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
+          <div class="form-row">
+            <div class="field" id="f-dob">
+              <label>Дата народження <span class="required">*</span></label>
+              <input type="date" id="dob" autocomplete="bday">
+              <div class="field-error">Мінімальний вік — 16 років</div>
             </div>
+            <div class="field" id="f-city">
+              <label>Місто / Жудець <span class="required">*</span></label>
+              <input type="text" id="city" placeholder="Cluj-Napoca" autocomplete="address-level2">
+              <div class="field-error">Обов'язкове поле</div>
+            </div>
+          </div>
 
-            <button class="acc-next" disabled>Далі →</button>
+          <div class="form-row">
+            <div class="field" id="f-email">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" id="email" placeholder="andrei@email.com" autocomplete="email">
+              <div class="field-error">Некоректний email</div>
+            </div>
+            <div class="field" id="f-phone">
+              <label>Телефон <span class="required">*</span></label>
+              <input type="tel" id="phone" placeholder="+40 700 000 000" autocomplete="tel">
+              <div class="field-error">Формат: +40 7xx xxx xxx або 07xx xxx xxx</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- STEP 2: Категорія таланту -->
-      <div class="accordion" id="acc2">
-        <div class="acc-header" id="h2">
-          <div class="acc-num">2</div>
-          <div class="acc-title">Категорія таланту</div>
-          <span class="acc-summary" id="sum2"></span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body" id="b2">
-          <div class="acc-body-inner">
+        <!-- ——— БЛОК 2: Твій талант ——— -->
+        <div class="form-block">
+          <div class="form-block-label">Твій талант</div>
 
-            <div class="form-row">
-              <div class="field" id="f-cat">
-                <label>Категорія <span class="required">*</span></label>
-                <select id="cat">
-                  <option value="">— Обери категорію —</option>
-                  <option value="vocal">Вокал</option>
-                  <option value="instrument">Інструмент</option>
-                  <option value="group">Гурт</option>
-                  <option value="dance">Танець</option>
-                </select>
-                <div class="field-error">Оберіть категорію</div>
-              </div>
-              <div class="field" id="f-genre">
-                <label>Жанр <span class="required">*</span></label>
-                <input type="text" id="genre" placeholder="Pop / R&B / Folk...">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
+          <div class="form-row">
+            <div class="field" id="f-cat">
+              <label>Категорія <span class="required">*</span></label>
+              <select id="cat">
+                <option value="">— Обери категорію —</option>
+                <option value="vocal">Вокал</option>
+                <option value="instrument">Інструмент</option>
+                <option value="group">Гурт</option>
+                <option value="dance">Танець</option>
+              </select>
+              <div class="field-error">Оберіть категорію</div>
             </div>
-
-            <div class="form-row">
-              <div class="field" id="f-song">
-                <label>Назва пісні / номеру <span class="required">*</span></label>
-                <input type="text" id="song" placeholder="Despacito">
-                <div class="field-error">Обов'язкове поле</div>
-              </div>
-              <div class="field">
-                <label>Роки досвіду</label>
-                <input type="number" id="exp" placeholder="3" min="0" max="60">
-              </div>
+            <div class="field" id="f-genre">
+              <label>Жанр <span class="required">*</span></label>
+              <input type="text" id="genre" placeholder="Pop / R&B / Folk...">
+              <div class="field-error">Обов'язкове поле</div>
             </div>
+          </div>
 
-            <div class="form-row single">
-              <div class="field" id="f-story">
-                <label>
-                  Твоя історія <span class="required">*</span>
-                  <span class="story-count" id="story-count">(0 / мін. 100)</span>
-                </label>
-                <textarea id="story" placeholder="Розкажи про себе та свій шлях у музиці..."></textarea>
-                <div class="field-error">Мінімум 100 символів</div>
-              </div>
+          <div class="form-row single">
+            <div class="field" id="f-story">
+              <label>
+                Коротко про себе <span class="required">*</span>
+                <span class="story-count" id="story-count">(0 / мін. 100)</span>
+              </label>
+              <textarea id="story" placeholder="Розкажи про себе та свій шлях у музиці..."></textarea>
+              <div class="field-error">Мінімум 100 символів</div>
             </div>
-
-            <button class="acc-next" disabled>Далі →</button>
           </div>
         </div>
-      </div>
 
-      <!-- STEP 3: Відео та фото -->
-      <div class="accordion" id="acc3">
-        <div class="acc-header" id="h3">
-          <div class="acc-num">3</div>
-          <div class="acc-title">Відео та фото</div>
-          <span class="acc-summary" id="sum3"></span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body" id="b3">
-          <div class="acc-body-inner">
+        <!-- ——— БЛОК 3: Відео-візитка ——— -->
+        <div class="form-block">
+          <div class="form-block-label">Відео-візитка</div>
 
-            <div class="form-row single">
-              <div class="field" id="f-video">
-                <label>
-                  Посилання YouTube / Google Drive <span class="required">*</span>
-                  <span class="label-hint">або завантаж файл нижче</span>
-                </label>
-                <input type="url" id="videourl" placeholder="https://youtube.com/watch?v=...">
-                <div class="field-error">Додайте посилання або завантажте файл</div>
-              </div>
+          <div class="form-row single">
+            <div class="field" id="f-video">
+              <label>
+                Посилання YouTube / Google Drive
+                <span class="label-hint">або завантаж файл нижче</span>
+              </label>
+              <input type="url" id="videourl" placeholder="https://youtube.com/watch?v=...">
+              <div class="field-error">Додайте посилання або завантажте файл</div>
             </div>
+          </div>
 
-            <div class="form-row single">
-              <div class="field field-file" id="f-videofile">
-                <label>
-                  Або завантажити файл
-                  <span class="label-hint">(MP4/MOV, макс. 500 МБ, 1–3 хв)</span>
-                </label>
+          <div class="video-divider">
+            <span>— або —</span>
+          </div>
+
+          <div class="form-row single">
+            <div class="field field-file" id="f-videofile">
+              <label>
+                Завантажити файл
+                <span class="label-hint">(MP4/MOV, макс. 500 МБ, 1–3 хв)</span>
+              </label>
+              <div class="file-drop" id="fileDrop">
                 <input type="file" id="videofile" accept="video/mp4,video/quicktime">
+                <div class="file-drop-text" id="fileDropText">
+                  <span class="file-drop-icon">↑</span>
+                  <span>Натисни або перетягни файл сюди</span>
+                </div>
               </div>
             </div>
-
-            <div class="form-row single">
-              <div class="field field-file">
-                <label>
-                  Фото профілю
-                  <span class="label-hint">(опціонально)</span>
-                </label>
-                <input type="file" accept="image/*">
-              </div>
-            </div>
-
-            <button class="acc-next" disabled>Далі →</button>
           </div>
         </div>
-      </div>
 
-      <!-- STEP 4: Підтвердження та згода -->
-      <div class="accordion" id="acc4">
-        <div class="acc-header" id="h4">
-          <div class="acc-num">4</div>
-          <div class="acc-title">Підтвердження та згода</div>
-          <span class="acc-summary" id="sum4"></span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body" id="b4">
-          <div class="acc-body-inner">
+        <!-- ——— БЛОК 4: Згоди ——— -->
+        <div class="form-block form-block--last">
+          <div class="form-block-label">Згоди</div>
 
-            <div class="consent-list">
-              <label class="field consent-label" id="f-cb1">
-                <input type="checkbox" id="cb1">
-                <span>
-                  <strong>Обробка персональних даних</strong> —
-                  погоджуюсь на обробку моїх даних відповідно до GDPR (Reg. 2016/679) та Закону 190/2018.
-                  <span class="required">*</span>
-                </span>
-                <div class="field-error">Необхідна згода</div>
-              </label>
+          <div class="consent-list">
+            <label class="field consent-label" id="f-cb1">
+              <input type="checkbox" id="cb1">
+              <span>
+                <strong>Обробка персональних даних</strong> —
+                погоджуюсь на обробку моїх даних відповідно до GDPR (Reg. 2016/679) та Закону 190/2018.
+                <span class="required">*</span>
+              </span>
+              <div class="field-error">Необхідна згода</div>
+            </label>
 
-              <label class="field consent-label" id="f-cb2">
-                <input type="checkbox" id="cb2">
-                <span>
-                  <strong>Публікація зображення та голосу</strong> —
-                  дозволяю використання відеоматеріалів у шоу та на платформах проєкту.
-                  <span class="required">*</span>
-                </span>
-                <div class="field-error">Необхідна згода</div>
-              </label>
+            <label class="field consent-label" id="f-cb2">
+              <input type="checkbox" id="cb2">
+              <span>
+                <strong>Публікація зображення та голосу</strong> —
+                дозволяю використання відеоматеріалів у шоу та на платформах проєкту.
+                <span class="required">*</span>
+              </span>
+              <div class="field-error">Необхідна згода</div>
+            </label>
 
-              <label class="field consent-label" id="f-cb3">
-                <input type="checkbox" id="cb3">
-                <span>
-                  <strong>Правила конкурсу</strong> —
-                  ознайомлений з умовами участі та приймаю їх.
-                  <span class="required">*</span>
-                </span>
-                <div class="field-error">Необхідна згода</div>
-              </label>
+            <label class="field consent-label" id="f-cb3">
+              <input type="checkbox" id="cb3">
+              <span>
+                <strong>Правила конкурсу</strong> —
+                ознайомлений з умовами участі та приймаю їх.
+                <span class="required">*</span>
+              </span>
+              <div class="field-error">Необхідна згода</div>
+            </label>
 
-              <label class="consent-label">
-                <input type="checkbox" id="cb4">
-                <span>
-                  Хочу отримувати новини про шоу на email.
-                  <em class="label-hint">(необов'язково)</em>
-                </span>
-              </label>
-            </div>
-
-            <button class="acc-next acc-next--submit" disabled>Надіслати заявку ✓</button>
-            <p class="consent-note">Після відправки ви отримаєте email з номером заявки</p>
-
+            <label class="consent-label consent-label--optional">
+              <input type="checkbox" id="cb4">
+              <span>
+                Хочу отримувати новини про шоу на email.
+                <em class="label-hint">(необов'язково)</em>
+              </span>
+            </label>
           </div>
+
+          <button class="btn-submit" id="btnSubmit">Надіслати заявку ✓</button>
+          <p class="consent-note">Після відправки ви отримаєте email з номером заявки</p>
         </div>
-      </div>
+
+      </div><!-- /.form-body -->
 
       <!-- Success screen -->
       <div class="success-screen" id="success">
@@ -427,7 +353,7 @@
         <div class="success-sub">Перевірте email — ми надіслали підтвердження з номером заявки</div>
       </div>
 
-    </div>
+    </div><!-- /.form-preview -->
   </section>
 
   <!-- ============================================================
