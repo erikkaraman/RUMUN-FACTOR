@@ -1,4 +1,27 @@
 /* ============================================================
+   0. SITE CONFIG — змінюй тільки тут
+   ============================================================ */
+
+const SITE = {
+  // Соцмережі
+  youtube:   '',   // напр. 'https://youtube.com/@rumunfactor'
+  instagram: '',
+  tiktok:    '',
+  facebook:  '',
+
+  // Юридичні документи
+  rulesUrl:  '',   // напр. 'rules.pdf' або 'https://...'
+  gdprUrl:   '',   // напр. 'gdpr.pdf'
+  cookieUrl: '',
+
+  // Контакти
+  contactUrl: '',  // напр. 'mailto:info@rumun-factor.ro'
+
+  // Дедлайн реєстрації
+  deadline: '2026-05-30T23:59:59',
+};
+
+/* ============================================================
    1. STATE
    ============================================================ */
 
@@ -417,4 +440,105 @@ document.addEventListener('DOMContentLoaded', () => {
   bindInputs();
   bindDragDrop();
   updateCount();
+
+  // Підставляємо посилання з SITE config
+  applySiteLinks();
+
+  // Запускаємо таймер
+  startCountdown();
+
+  // FAQ акордеон
+  initFaq();
 });
+
+/* ============================================================
+   9. SITE LINKS — підставляє посилання з конфігу
+   ============================================================ */
+
+function applySiteLinks() {
+  const map = {
+    'link-youtube':   SITE.youtube,
+    'link-instagram': SITE.instagram,
+    'link-tiktok':    SITE.tiktok,
+    'link-facebook':  SITE.facebook,
+    'link-rules':     SITE.rulesUrl,
+    'link-gdpr':      SITE.gdprUrl,
+    'link-cookie':    SITE.cookieUrl,
+    'link-contact':   SITE.contactUrl,
+  };
+
+  Object.entries(map).forEach(([id, url]) => {
+    document.querySelectorAll('[data-link="' + id + '"]').forEach(el => {
+      if (!url) return;
+      if (el.tagName === 'A') {
+        el.href = url;
+        if (!url.startsWith('#') && !url.startsWith('mailto')) {
+          el.target = '_blank';
+          el.rel = 'noopener noreferrer';
+        }
+      }
+    });
+  });
+}
+
+/* ============================================================
+   10. COUNTDOWN TIMER
+   ============================================================ */
+
+function startCountdown() {
+  const el = document.getElementById('countdown');
+  if (!el) return;
+
+  function tick() {
+    const now  = new Date();
+    const end  = new Date(SITE.deadline);
+    const diff = end - now;
+
+    if (diff <= 0) {
+      el.innerHTML = '<span class="cd-over">Реєстрацію завершено</span>';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
+
+    el.innerHTML =
+      unit(d, 'дн') + unit(h, 'год') + unit(m, 'хв') + unit(s, 'с');
+  }
+
+  function unit(n, label) {
+    return '<span class="cd-unit"><b>' + String(n).padStart(2, '0') + '</b><em>' + label + '</em></span>';
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ============================================================
+   11. FAQ ACCORDION
+   ============================================================ */
+
+function initFaq() {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const ans = item.querySelector('.faq-a');
+    if (!btn || !ans) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      // Закриваємо всі інші
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = null;
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    });
+  });
+}

@@ -42,11 +42,17 @@ body {
 }
 
 /* scroll-margin-top — щоб sticky nav не перекривав якорі */
+:root {
+  --nav-h: 56px;
+}
+
 .hero,
 .section,
 .timeline-section,
-.reg-section {
-  scroll-margin-top: 56px;
+.reg-section,
+.prize-section,
+.faq-section {
+  scroll-margin-top: var(--nav-h);
 }
 
 /* ============================================================
@@ -1093,4 +1099,290 @@ footer {
   .btn-secondary { max-width: 100%; }
 
   .stats-bar { justify-content: space-between; }
+}
+
+/* ============================================================
+   14. COUNTDOWN
+   ============================================================ */
+
+.hero-deadline {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.hero-deadline-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.hero-deadline-date {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  background: rgba(10,10,10,0.6);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 4px 4px;
+}
+
+.cd-unit b {
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+  font-weight: normal;
+}
+
+.cd-unit em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.cd-over {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ============================================================
+   15. PRIZE
+   ============================================================ */
+
+.prize-section {
+  padding: 80px 40px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.prize-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2px;
+  margin-bottom: 24px;
+}
+
+.prize-card {
+  background: var(--dark3);
+  border: 1px solid var(--mid);
+  padding: 32px 24px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.prize-card:hover {
+  border-color: rgba(201,168,76,0.3);
+}
+
+.prize-card--main {
+  border-color: rgba(201,168,76,0.35);
+  background: rgba(201,168,76,0.04);
+}
+
+.prize-place {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.prize-amount {
+  font-family: var(--display);
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--gold);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.prize-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.prize-note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.prize-note strong {
+  color: var(--text);
+}
+
+/* ============================================================
+   16. FAQ
+   ============================================================ */
+
+.faq-section {
+  background: var(--dark2);
+  padding: 80px 40px;
+}
+
+.faq-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  margin-top: 8px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-q {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: 0.2px;
+}
+
+.faq-q:hover {
+  color: var(--gold);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(201,168,76,0.4);
+  position: relative;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--gold);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.faq-icon::before { width: 8px; height: 1px; }
+.faq-icon::after  { width: 1px; height: 8px; transition: transform 0.25s; }
+
+.faq-item.open .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-a p {
+  padding: 0 0 20px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* ============================================================
+   17. SUCCESS SCREEN (оновлений)
+   ============================================================ */
+
+.success-next {
+  margin: 24px auto 0;
+  max-width: 400px;
+  text-align: left;
+}
+
+.success-next p {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.success-next ol {
+  padding-left: 20px;
+}
+
+.success-next ol li {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.success-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ============================================================
+   18. CONSENT LINK
+   ============================================================ */
+
+.consent-link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-link:hover {
+  color: var(--gold-light);
+}
+
+/* ============================================================
+   19. RESPONSIVE — нові блоки
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .prize-section { padding: 56px 20px; }
+  .faq-section   { padding: 56px 20px; }
+
+  .cd-unit b  { font-size: 22px; }
+  .cd-unit    { min-width: 40px; }
+
+  .prize-cards { grid-template-columns: 1fr; }
+
+  .scroll-margin-top-fix {
+    scroll-margin-top: 56px;
+  }
 }
