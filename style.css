@@ -391,8 +391,22 @@ nav ul li a:hover {
 }
 
 .stat-platforms {
-  font-size: clamp(18px, 3vw, 32px);
-  letter-spacing: 1px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.platform-icon {
+  color: var(--gold);
+  font-size: clamp(28px, 5vw, 40px);
+  transition: color 0.2s, transform 0.2s;
+  line-height: 1;
+}
+
+.platform-icon:hover {
+  color: var(--gold-light);
+  transform: translateY(-2px);
 }
 
 /* ============================================================
@@ -984,7 +998,7 @@ footer {
   /* Nav */
   nav {
     padding: 12px 20px;
-    position: relative;
+    position: sticky;
   }
 
   .nav-hamburger { display: flex; }
