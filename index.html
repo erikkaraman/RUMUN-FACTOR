@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ro">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RUMUN-FACTOR — Музичне шоу талантів</title>
+  <title>RUMUN-FACTOR — Show de Talente Muzicale</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" href="images/favicon.ico">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -13,244 +15,292 @@
   <!-- ============================================================
        NAVIGATION
        ============================================================ -->
-  <nav>
-    <div class="logo">RUMUN<span class="dash">-</span>FACTOR</div>
+  <nav id="site-nav">
+    <div class="nav-logo">RUMUN<span class="nav-logo-dash">-</span>FACTOR</div>
 
-    <button class="nav-hamburger" id="navToggle" aria-label="Меню" aria-expanded="false">
+    <button class="nav-hamburger" id="navToggle" aria-label="Meniu" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
     <ul id="navMenu">
-      <li><a href="#about"      data-target="about">Про шоу</a></li>
-      <li><a href="#categories" data-target="categories">Категорії</a></li>
-      <li><a href="#prize"      data-target="prize">Призи</a></li>
-      <li><a href="#how"        data-target="how">Як взяти участь</a></li>
+      <li><a href="#about"      data-target="about">Despre show</a></li>
+      <li><a href="#categories" data-target="categories">Categorii</a></li>
+      <li><a href="#prize"      data-target="prize">Premiu</a></li>
+      <li><a href="#how"        data-target="how">Cum participi</a></li>
       <li><a href="#faq"        data-target="faq">FAQ</a></li>
-      <li><a href="#register"   data-target="register">Реєстрація</a></li>
+      <li><a href="#register"   data-target="register">Înregistrare</a></li>
     </ul>
 
-    <button class="nav-cta">Подати заявку</button>
+    <button class="nav-cta" id="navCtaBtn">Aplică acum</button>
   </nav>
 
   <!-- ============================================================
-       HERO
+       HERO  (transparent — no section-shell)
        ============================================================ -->
-  <section class="hero" id="about">
-    <div class="hero-bg"></div>
-    <div class="hero-bg-mobile"></div>
-    <div class="hero-lines"></div>
+  <section class="hero anchor-section" id="about">
 
     <p class="hero-sub">
-      Музичне шоу талантів у Румунії.<br>
-      <strong>Твій голос заслуговує на сцену.</strong>
+      Show de talente muzicale în România.<br>
+      <strong>Vocea ta merită o scenă.</strong>
     </p>
 
-    <div class="hero-logo-space"></div>
+    <div class="hero-logo-wrap">
+      <img src="images/logo.png" alt="RUMUN FACTOR" class="hero-logo-img">
+    </div>
 
     <div class="hero-bottom">
-      <div class="hero-tag">
-        <span></span>Сезон 1 · Реєстрація відкрита
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>Sezonul 1 · Înscrieri deschise
       </div>
       <div class="hero-btns">
-        <button class="btn-primary"   id="btn-register">Зареєструватися</button>
-        <button class="btn-secondary" id="btn-how">Як це працює</button>
+        <button class="btn-primary"   id="btn-register">Înregistrează-te</button>
+        <button class="btn-secondary" id="btn-how">Cum funcționează</button>
       </div>
     </div>
 
-    <div class="hero-deadline">
-      <div class="hero-deadline-label">До закінчення реєстрації</div>
+    <div class="hero-countdown">
+      <div class="hero-countdown-label">Timp rămas până la închiderea înscrierilor</div>
       <div id="countdown" class="countdown"></div>
-      <div class="hero-deadline-date">Дедлайн: 30 травня 2026</div>
+      <div class="hero-countdown-date">Termen limită: 30 mai 2026</div>
     </div>
 
-    <div class="hero-scroll">
+    <div class="hero-scroll-hint">
       <span>scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
   <!-- ============================================================
-       STATS BAR
+       STATS BAR  (transparent)
        ============================================================ -->
   <div class="stats-bar">
-    <div class="stat">
-      <div class="stat-n">4</div>
-      <div class="stat-l">Категорії</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">16+</div>
-      <div class="stat-l">Вік учасників</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">10 000 €</div>
-      <div class="stat-l">Призовий фонд</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">RO</div>
-      <div class="stat-l">Країна</div>
-    </div>
-    <div class="stat">
-      <div class="stat-platforms">
-        <a href="#" data-link="link-youtube"   class="platform-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="#" data-link="link-instagram" class="platform-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" data-link="link-tiktok"    class="platform-icon" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a href="#" data-link="link-facebook"  class="platform-icon" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Categorii</div>
       </div>
-      <div class="stat-l">Платформи</div>
+      <div class="stat">
+        <div class="stat-value">16+</div>
+        <div class="stat-label">Vârsta participanților</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-prize">20 000 €</div>
+        <div class="stat-label">Premiu câștigător</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">RO</div>
+        <div class="stat-label">Țara</div>
+      </div>
+      <div class="stat">
+        <div class="stat-platforms">
+          <a href="#" data-link="link-youtube"   class="platform-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" data-link="link-instagram" class="platform-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" data-link="link-tiktok"    class="platform-icon" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="#" data-link="link-facebook"  class="platform-icon" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="stat-label">Platforme</div>
+      </div>
     </div>
   </div>
 
   <!-- ============================================================
        CATEGORIES
        ============================================================ -->
-  <section class="section" id="categories">
-    <div class="section-label">Хто може взяти участь</div>
-    <div class="section-title">КАТЕГОРІЇ<br>ТАЛАНТУ</div>
-    <div class="cats">
-      <div class="cat">
-        <span class="cat-icon">🎤</span>
-        <div class="cat-name">Вокал</div>
-        <div class="cat-desc">Сольний виступ</div>
-      </div>
-      <div class="cat">
-        <span class="cat-icon">🎸</span>
-        <div class="cat-name">Інструмент</div>
-        <div class="cat-desc">Будь-який інструмент</div>
-      </div>
-      <div class="cat">
-        <span class="cat-icon">🎶</span>
-        <div class="cat-name">Гурт</div>
-        <div class="cat-desc">2+ учасники</div>
-      </div>
-      <div class="cat">
-        <span class="cat-icon">💃</span>
-        <div class="cat-name">Танець</div>
-        <div class="cat-desc">Будь-який стиль</div>
+  <section class="section-shell anchor-section" id="categories">
+    <div class="section-inner">
+      <div class="section-label">Cine poate participa</div>
+      <div class="section-title">CATEGORII<br>DE TALENT</div>
+      <div class="cats">
+        <div class="cat">
+          <span class="cat-icon">🎤</span>
+          <div class="cat-name">Vocal</div>
+          <div class="cat-desc">Prestație solo</div>
+        </div>
+        <div class="cat">
+          <span class="cat-icon">🎸</span>
+          <div class="cat-name">Instrument</div>
+          <div class="cat-desc">Orice instrument</div>
+        </div>
+        <div class="cat">
+          <span class="cat-icon">🎶</span>
+          <div class="cat-name">Trupă</div>
+          <div class="cat-desc">2+ participanți</div>
+        </div>
+        <div class="cat">
+          <span class="cat-icon">💃</span>
+          <div class="cat-name">Dans</div>
+          <div class="cat-desc">Orice stil</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-     PRIZE
-     ============================================================ -->
-  <section class="prize-section" id="prize">
-    <div class="section-label">Нагороди</div>
-    <div class="section-title">ПРИЗОВИЙ<br>ФОНД</div>
-    <div class="prize-cards">
-      <div class="prize-card prize-card--main">
-        <div class="prize-place">🥇 1 місце</div>
-        <div class="prize-amount">5 000 €</div>
-        <div class="prize-desc">Переможець отримує грошовий приз та підтримку у просуванні</div>
-      </div>
-      <div class="prize-card">
-        <div class="prize-place">🥈 2 місце</div>
-        <div class="prize-amount">3 000 €</div>
-        <div class="prize-desc">Грошовий приз та публікація на всіх платформах шоу</div>
-      </div>
-      <div class="prize-card">
-        <div class="prize-place">🥉 3 місце</div>
-        <div class="prize-amount">2 000 €</div>
-        <div class="prize-desc">Грошовий приз та участь у фінальному гала-концерті</div>
-      </div>
+       PRIZE
+       ============================================================ -->
+  <section class="section-shell anchor-section" id="prize">
+    <div class="section-inner">
+      <div class="section-label">Recompense</div>
+      <div class="section-title">MARELE<br>PREMIU</div>
+
+      <div class="prize-layout">
+
+        <div class="prize-card-main">
+          <div class="prize-card-main-glow"></div>
+          <div class="prize-card-main-crown">👑</div>
+          <div class="prize-card-main-title">Câștigătorul absolut</div>
+          <div class="prize-card-main-amount">20 000 €</div>
+          <div class="prize-card-main-divider"></div>
+          <p class="prize-card-main-desc">
+            Un singur câștigător sau grup câștigător primește premiul în bani
+            și o șansă unică de a deveni parte din povestea RUMUN.
+          </p>
+        </div>
+
+        <div class="prize-benefits">
+          <div class="prize-benefit">
+            <div class="prize-benefit-icon">🎤</div>
+            <div class="prize-benefit-body">
+              <div class="prize-benefit-title">Alătură-te trupei RUMUN</div>
+              <div class="prize-benefit-desc">Câștigătorul primește șansa de a face parte din trupa RUMUN — proiectul muzical în jurul căruia este construit show-ul.</div>
+            </div>
+          </div>
+          <div class="prize-benefit">
+            <div class="prize-benefit-icon">💰</div>
+            <div class="prize-benefit-body">
+              <div class="prize-benefit-title">Premiu în bani — 20 000 €</div>
+              <div class="prize-benefit-desc">Premiu cash acordat câștigătorului absolut al competiției, fără împărțire.</div>
+            </div>
+          </div>
+          <div class="prize-benefit">
+            <div class="prize-benefit-icon">📣</div>
+            <div class="prize-benefit-body">
+              <div class="prize-benefit-title">Promovare media</div>
+              <div class="prize-benefit-desc">Campanie de PR pe toate platformele proiectului RUMUN-FACTOR: YouTube, Instagram, TikTok, Facebook.</div>
+            </div>
+          </div>
+          <div class="prize-benefit">
+            <div class="prize-benefit-icon">🎬</div>
+            <div class="prize-benefit-body">
+              <div class="prize-benefit-title">Prezență pe scenă</div>
+              <div class="prize-benefit-desc">Apariție în producțiile video și prestații alături de trupa RUMUN.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.prize-layout -->
+
+      <p class="prize-note">
+        Premiul este acordat unui singur câștigător sau grup câștigător, la decizia juriului și a organizatorilor.
+      </p>
     </div>
-    <p class="prize-note">Загальний призовий фонд — <strong>10 000 €</strong>. Розподіл між переможцями затверджується організаторами.</p>
   </section>
 
   <!-- ============================================================
        TIMELINE
        ============================================================ -->
-  <div class="timeline-section" id="how">
-    <div class="timeline-inner">
-      <div class="section-label">Як це працює</div>
-      <div class="section-title">ШЛЯХ ДО<br>ФІНАЛУ</div>
+  <section class="section-shell anchor-section" id="how">
+    <div class="section-inner">
+      <div class="section-label">Cum funcționează</div>
+      <div class="section-title">DRUMUL SPRE<br>FINALĂ</div>
       <div class="steps">
         <div class="step">
           <div class="step-num">01</div>
-          <div>
-            <div class="step-title">Реєстрація</div>
-            <div class="step-desc">Заповни форму та завантаж відео-візитку</div>
+          <div class="step-body">
+            <div class="step-title">Înregistrare</div>
+            <div class="step-desc">Completează formularul și încarcă videoclipul de prezentare</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">02</div>
-          <div>
-            <div class="step-title">Відбір</div>
-            <div class="step-desc">Журі оцінює заявки та обирає учасників</div>
+          <div class="step-body">
+            <div class="step-title">Selecție</div>
+            <div class="step-desc">Juriul evaluează candidaturile și alege participanții</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">03</div>
-          <div>
-            <div class="step-title">Виступи</div>
-            <div class="step-desc">Зйомки та публікація на YouTube</div>
+          <div class="step-body">
+            <div class="step-title">Prestații</div>
+            <div class="step-desc">Filmări și publicare pe YouTube</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">04</div>
-          <div>
-            <div class="step-title">Голосування</div>
-            <div class="step-desc">Аудиторія та журі обирають фіналістів</div>
+          <div class="step-body">
+            <div class="step-title">Vot</div>
+            <div class="step-desc">Publicul și juriul aleg finaliștii</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">05</div>
-          <div>
-            <div class="step-title">Лейбл</div>
-            <div class="step-desc">Топ-фіналісти отримують підтримку лейблу</div>
+          <div class="step-body">
+            <div class="step-title">Marea Finală</div>
+            <div class="step-desc">Gala finală — juriul desemnează câștigătorul absolut</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- ============================================================
-     FAQ
-     ============================================================ -->
-  <section class="faq-section" id="faq">
-    <div class="faq-inner">
-      <div class="section-label">Часті запитання</div>
+       FAQ
+       ============================================================ -->
+  <section class="section-shell anchor-section" id="faq">
+    <div class="section-inner">
+      <div class="section-label">Întrebări frecvente</div>
       <div class="section-title">FAQ</div>
       <div class="faq-list">
 
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <span>Хто може взяти участь?</span>
+          <button class="faq-question" aria-expanded="false">
+            <span>Cine poate participa?</span>
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-a">
-            <p>Участь можуть брати всі охочі віком від 16 років, які проживають на території Румунії. Попередній досвід виступів не є обов'язковим — ми шукаємо справжні таланти.</p>
+          <div class="faq-answer">
+            <p>Pot participa toate persoanele cu vârsta de minimum 16 ani care locuiesc pe teritoriul României. Experiența anterioară nu este obligatorie — căutăm talente autentice.</p>
           </div>
         </div>
 
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <span>Яким має бути відео-візитка?</span>
+          <button class="faq-question" aria-expanded="false">
+            <span>Ce trebuie să conțină videoclipul de prezentare?</span>
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-a">
-            <p>Тривалість 1–3 хвилини, формат MP4 або MOV. Можна завантажити файл (до 500 МБ) або надати посилання на YouTube чи Google Drive. Відео має показати твій талант — без складної постановки чи монтажу.</p>
+          <div class="faq-answer">
+            <p>Durata 1–3 minute, format MP4 sau MOV. Poți încărca fișierul (până la 500 MB) sau trimite un link YouTube ori Google Drive. Videoclipul trebuie să îți prezinte talentul — fără montaj complex.</p>
           </div>
         </div>
 
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <span>Коли я дізнаюсь результат відбору?</span>
+          <button class="faq-question" aria-expanded="false">
+            <span>Când voi afla rezultatul selecției?</span>
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-a">
-            <p>Після закінчення прийому заявок (30 травня 2026) журі розглядає всі відео. Результати надсилаються на вказаний email протягом 14 робочих днів.</p>
+          <div class="faq-answer">
+            <p>După închiderea înscrierilor (30 mai 2026), juriul analizează toate videoclipurile. Rezultatele sunt trimise pe email-ul indicat în termen de 14 zile lucrătoare.</p>
           </div>
         </div>
 
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <span>Чи можна подати заявку повторно?</span>
+          <button class="faq-question" aria-expanded="false">
+            <span>Pot aplica din nou dacă nu am fost selectat?</span>
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-a">
-            <p>Так, якщо твою заявку не було прийнято в поточному сезоні — ти можеш подати знову в наступному. В рамках одного сезону приймається лише одна заявка від учасника.</p>
+          <div class="faq-answer">
+            <p>Da, dacă aplicația ta nu a fost acceptată în sezonul curent, poți aplica din nou în sezonul următor. În cadrul unui sezon se acceptă o singură aplicație per participant.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Ce înseamnă să faci parte din trupa RUMUN?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Câștigătorul primește șansa de a colabora activ cu trupa RUMUN — participând la producții video, apariții publice și activități artistice ale proiectului. Detaliile colaborării sunt stabilite împreună cu organizatorii după finală.</p>
           </div>
         </div>
 
@@ -259,243 +309,242 @@
   </section>
 
   <!-- ============================================================
-       REGISTRATION FORM — SINGLE STEP
+       REGISTRATION FORM
        ============================================================ -->
-  <section class="reg-section" id="register">
-    <div class="section-label">Форма реєстрації</div>
-    <div class="section-title">ПОДАЙ<br>ЗАЯВКУ</div>
+  <section class="section-shell anchor-section" id="register">
+    <div class="section-inner">
+      <div class="section-label">Formular de înregistrare</div>
+      <div class="section-title">APLICĂ<br>ACUM</div>
 
-    <div class="form-preview">
+      <div class="form-shell">
 
-      <!-- Декоративний header у стилі браузерного вікна -->
-      <div class="form-header">
-        <div class="dot r"></div>
-        <div class="dot y"></div>
-        <div class="dot g"></div>
-        <div class="form-header-title">Реєстрація · rumun-factor.ro</div>
-      </div>
-
-      <div class="form-body" id="formBody">
-
-        <!-- ——— БЛОК 1: Особисті дані ——— -->
-        <div class="form-block">
-          <div class="form-block-label">Особисті дані</div>
-
-          <div class="form-row">
-            <div class="field" id="f-fname">
-              <label>Ім'я <span class="required">*</span></label>
-              <input type="text" id="fname" placeholder="Андрій" autocomplete="given-name">
-              <div class="field-error">Обов'язкове поле</div>
-            </div>
-            <div class="field" id="f-lname">
-              <label>Прізвище <span class="required">*</span></label>
-              <input type="text" id="lname" placeholder="Попеску" autocomplete="family-name">
-              <div class="field-error">Обов'язкове поле</div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field" id="f-dob">
-              <label>Дата народження <span class="required">*</span></label>
-              <input type="date" id="dob" autocomplete="bday">
-              <div class="field-error">Мінімальний вік — 16 років</div>
-            </div>
-            <div class="field" id="f-city">
-              <label>Місто / Жудець <span class="required">*</span></label>
-              <input type="text" id="city" placeholder="Cluj-Napoca" autocomplete="address-level2">
-              <div class="field-error">Обов'язкове поле</div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field" id="f-email">
-              <label>Email <span class="required">*</span></label>
-              <input type="email" id="email" placeholder="andrei@email.com" autocomplete="email">
-              <div class="field-error">Некоректний email</div>
-            </div>
-            <div class="field" id="f-phone">
-              <label>Телефон <span class="required">*</span></label>
-              <input type="tel" id="phone" placeholder="+40 700 000 000" autocomplete="tel">
-              <div class="field-error">Формат: +40 7xx xxx xxx або 07xx xxx xxx</div>
-            </div>
-          </div>
+        <div class="form-titlebar">
+          <div class="titlebar-dot titlebar-dot--red"></div>
+          <div class="titlebar-dot titlebar-dot--yellow"></div>
+          <div class="titlebar-dot titlebar-dot--green"></div>
+          <div class="titlebar-label">Înregistrare · rumun-factor.ro</div>
         </div>
 
-        <!-- ——— БЛОК 2: Твій талант ——— -->
-        <div class="form-block">
-          <div class="form-block-label">Твій талант</div>
+        <div class="form-body" id="formBody">
 
-          <div class="form-row">
-            <div class="field" id="f-cat">
-              <label>Категорія <span class="required">*</span></label>
-              <select id="cat">
-                <option value="">— Обери категорію —</option>
-                <option value="vocal">Вокал</option>
-                <option value="instrument">Інструмент</option>
-                <option value="group">Гурт</option>
-                <option value="dance">Танець</option>
-              </select>
-              <div class="field-error">Оберіть категорію</div>
+          <!-- BLOCK 1: Personal data -->
+          <div class="form-block">
+            <div class="form-block-label">Date personale</div>
+
+            <div class="form-row">
+              <div class="field" id="f-fname">
+                <label>Prenume <span class="required">*</span></label>
+                <input type="text" id="fname" placeholder="Andrei" autocomplete="given-name">
+                <div class="field-error">Câmp obligatoriu</div>
+              </div>
+              <div class="field" id="f-lname">
+                <label>Nume <span class="required">*</span></label>
+                <input type="text" id="lname" placeholder="Popescu" autocomplete="family-name">
+                <div class="field-error">Câmp obligatoriu</div>
+              </div>
             </div>
-            <div class="field" id="f-genre">
-              <label>Жанр <span class="required">*</span></label>
-              <input type="text" id="genre" placeholder="Pop / R&B / Folk...">
-              <div class="field-error">Обов'язкове поле</div>
+
+            <div class="form-row">
+              <div class="field" id="f-dob">
+                <label>Data nașterii <span class="required">*</span></label>
+                <input type="date" id="dob" autocomplete="bday">
+                <div class="field-error">Vârsta minimă — 16 ani</div>
+              </div>
+              <div class="field" id="f-city">
+                <label>Oraș / Județ <span class="required">*</span></label>
+                <input type="text" id="city" placeholder="Cluj-Napoca" autocomplete="address-level2">
+                <div class="field-error">Câmp obligatoriu</div>
+              </div>
             </div>
-          </div>
 
-          <div class="form-row single">
-            <div class="field" id="f-story">
-              <label>
-                Коротко про себе <span class="required">*</span>
-                <span class="story-count" id="story-count">(0 / мін. 100)</span>
-              </label>
-              <textarea id="story" placeholder="Розкажи про себе та свій шлях у музиці..."></textarea>
-              <div class="field-error">Мінімум 100 символів</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ——— БЛОК 3: Відео-візитка ——— -->
-        <div class="form-block">
-          <div class="form-block-label">Відео-візитка</div>
-
-          <div class="form-row single">
-            <div class="field" id="f-video">
-              <label>
-                Посилання YouTube / Google Drive
-                <span class="label-hint">або завантаж файл нижче</span>
-              </label>
-              <input type="url" id="videourl" placeholder="https://youtube.com/watch?v=...">
-              <div class="field-error">Додайте посилання або завантажте файл</div>
+            <div class="form-row">
+              <div class="field" id="f-email">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="andrei@email.com" autocomplete="email">
+                <div class="field-error">Email invalid</div>
+              </div>
+              <div class="field" id="f-phone">
+                <label>Telefon <span class="required">*</span></label>
+                <input type="tel" id="phone" placeholder="+40 700 000 000" autocomplete="tel">
+                <div class="field-error">Format: +40 7xx xxx xxx sau 07xx xxx xxx</div>
+              </div>
             </div>
           </div>
 
-          <div class="video-divider">
-            <span>— або —</span>
+          <!-- BLOCK 2: Talent -->
+          <div class="form-block">
+            <div class="form-block-label">Talentul tău</div>
+
+            <div class="form-row">
+              <div class="field" id="f-cat">
+                <label>Categorie <span class="required">*</span></label>
+                <select id="cat">
+                  <option value="">— Alege categoria —</option>
+                  <option value="vocal">Vocal</option>
+                  <option value="instrument">Instrument</option>
+                  <option value="group">Trupă</option>
+                  <option value="dance">Dans</option>
+                </select>
+                <div class="field-error">Selectează o categorie</div>
+              </div>
+              <div class="field" id="f-genre">
+                <label>Gen muzical <span class="required">*</span></label>
+                <input type="text" id="genre" placeholder="Pop / R&B / Folk...">
+                <div class="field-error">Câmp obligatoriu</div>
+              </div>
+            </div>
+
+            <div class="form-row form-row--full">
+              <div class="field" id="f-story">
+                <label>
+                  Câteva cuvinte despre tine <span class="required">*</span>
+                  <span class="char-count" id="story-count">(0 / min. 100)</span>
+                </label>
+                <textarea id="story" placeholder="Povestește despre tine și parcursul tău în muzică..."></textarea>
+                <div class="field-error">Minimum 100 de caractere</div>
+              </div>
+            </div>
           </div>
 
-          <div class="form-row single">
-            <div class="field field-file" id="f-videofile">
-              <label>
-                Завантажити файл
-                <span class="label-hint">(MP4/MOV, макс. 500 МБ, 1–3 хв)</span>
-              </label>
-              <div class="file-drop" id="fileDrop">
-                <input type="file" id="videofile" accept="video/mp4,video/quicktime">
-                <div class="file-drop-text" id="fileDropText">
-                  <span class="file-drop-icon">↑</span>
-                  <span>Натисни або перетягни файл сюди</span>
+          <!-- BLOCK 3: Video -->
+          <div class="form-block">
+            <div class="form-block-label">Videoclip de prezentare</div>
+
+            <div class="form-row form-row--full">
+              <div class="field" id="f-video">
+                <label>
+                  Link YouTube / Google Drive
+                  <span class="label-hint">sau încarcă fișierul mai jos</span>
+                </label>
+                <input type="url" id="videourl" placeholder="https://youtube.com/watch?v=...">
+                <div class="field-error">Adaugă un link sau încarcă un fișier</div>
+              </div>
+            </div>
+
+            <div class="video-divider"><span>— sau —</span></div>
+
+            <div class="form-row form-row--full">
+              <div class="field field--file" id="f-videofile">
+                <label>
+                  Încarcă fișier
+                  <span class="label-hint">(MP4/MOV, max. 500 MB, 1–3 min)</span>
+                </label>
+                <div class="file-drop" id="fileDrop">
+                  <input type="file" id="videofile" accept="video/mp4,video/quicktime">
+                  <div class="file-drop-content" id="fileDropText">
+                    <span class="file-drop-icon">↑</span>
+                    <span>Apasă sau trage fișierul aici</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- ——— БЛОК 4: Згоди ——— -->
-        <div class="form-block form-block--last">
-          <div class="form-block-label">Згоди</div>
+          <!-- BLOCK 4: Consents -->
+          <div class="form-block form-block--last">
+            <div class="form-block-label">Acorduri</div>
 
-          <div class="consent-list">
-            <label class="field consent-label" id="f-cb1">
-              <input type="checkbox" id="cb1">
-              <span>
-                <strong>Обробка персональних даних</strong> —
-                погоджуюсь на обробку моїх даних відповідно до
-                <a href="#" data-link="link-gdpr" class="consent-link">GDPR (Reg. 2016/679) та Закону 190/2018</a>.
-                <span class="required">*</span>
-              </span>
-              <div class="field-error">Необхідна згода</div>
-            </label>
+            <div class="consent-list">
+              <label class="field consent-row" id="f-cb1">
+                <input type="checkbox" id="cb1">
+                <span>
+                  <strong>Prelucrarea datelor personale</strong> —
+                  sunt de acord cu prelucrarea datelor mele conform
+                  <a href="#" data-link="link-gdpr" class="link-accent">GDPR (Reg. 2016/679) și Legii 190/2018</a>.
+                  <span class="required">*</span>
+                </span>
+                <div class="field-error">Acordul este necesar</div>
+              </label>
 
-            <label class="field consent-label" id="f-cb2">
-              <input type="checkbox" id="cb2">
-              <span>
-                <strong>Публікація зображення та голосу</strong> —
-                дозволяю використання відеоматеріалів у шоу та на платформах проєкту.
-                <span class="required">*</span>
-              </span>
-              <div class="field-error">Необхідна згода</div>
-            </label>
+              <label class="field consent-row" id="f-cb2">
+                <input type="checkbox" id="cb2">
+                <span>
+                  <strong>Publicarea imaginii și vocii</strong> —
+                  permit utilizarea materialelor video în show și pe platformele proiectului.
+                  <span class="required">*</span>
+                </span>
+                <div class="field-error">Acordul este necesar</div>
+              </label>
 
-            <label class="field consent-label" id="f-cb3">
-              <input type="checkbox" id="cb3">
-              <span>
-                <strong>Правила конкурсу</strong> —
-                ознайомлений з <a href="#" data-link="link-rules" class="consent-link">умовами участі</a> та приймаю їх.
-                <span class="required">*</span>
-              </span>
-              <div class="field-error">Необхідна згода</div>
-            </label>
+              <label class="field consent-row" id="f-cb3">
+                <input type="checkbox" id="cb3">
+                <span>
+                  <strong>Regulamentul concursului</strong> —
+                  am citit <a href="#" data-link="link-rules" class="link-accent">condițiile de participare</a> și le accept.
+                  <span class="required">*</span>
+                </span>
+                <div class="field-error">Acordul este necesar</div>
+              </label>
 
-            <label class="consent-label consent-label--optional">
-              <input type="checkbox" id="cb4">
-              <span>
-                Хочу отримувати новини про шоу на email.
-                <em class="label-hint">(необов'язково)</em>
-              </span>
-            </label>
+              <label class="consent-row consent-row--optional">
+                <input type="checkbox" id="cb4">
+                <span>
+                  Vreau să primesc noutăți despre show pe email.
+                  <em class="label-hint">(opțional)</em>
+                </span>
+              </label>
+            </div>
+
+            <button class="btn-submit" id="btnSubmit">Trimite aplicația ✓</button>
+            <p class="form-note">După trimitere vei primi un email cu numărul aplicației tale</p>
           </div>
 
-          <button class="btn-submit" id="btnSubmit">Надіслати заявку ✓</button>
-          <p class="consent-note">Після відправки ви отримаєте email з номером заявки</p>
+        </div><!-- /.form-body -->
+
+        <!-- Success screen -->
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">🎤</div>
+          <div class="success-title">Aplicație trimisă!</div>
+          <div class="success-number" id="successNumber">#RF-000000</div>
+          <div class="success-sub">Verifică email-ul — ți-am trimis confirmarea cu numărul aplicației</div>
+          <div class="success-steps">
+            <p>Ce urmează?</p>
+            <ol>
+              <li>Vei primi un email de confirmare în câteva minute</li>
+              <li>Juriul va analiza aplicația după 30 mai 2026</li>
+              <li>Rezultatul va fi trimis pe email în 14 zile lucrătoare</li>
+            </ol>
+          </div>
+          <div class="success-actions">
+            <button class="btn-secondary" id="btnRestart">Înapoi la început</button>
+          </div>
         </div>
 
-      </div><!-- /.form-body -->
-
-      <!-- Success screen -->
-      <div class="success-screen" id="success">
-        <div class="success-icon">🎤</div>
-        <div class="success-title">Заявку подано!</div>
-        <div class="success-num" id="success-num">#RF-000000</div>
-        <div class="success-sub">Перевірте email — ми надіслали підтвердження з номером заявки</div>
-        <div class="success-next">
-          <p>Що далі?</p>
-          <ol>
-            <li>Отримаєш email з підтвердженням протягом кількох хвилин</li>
-            <li>Журі розгляне заявку після 30 травня 2026</li>
-            <li>Результат надійде на email протягом 14 робочих днів</li>
-          </ol>
-        </div>
-        <div class="success-actions">
-          <button class="btn-secondary" onclick="location.reload()">На початок</button>
-        </div>
-      </div>
-
-    </div><!-- /.form-preview -->
+      </div><!-- /.form-shell -->
+    </div>
   </section>
 
   <!-- ============================================================
        FOOTER
        ============================================================ -->
-  <footer>
+  <footer id="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
 
         <div class="footer-brand">
-          <div class="logo">RUMUN<span class="dash">-</span>FACTOR</div>
-          <p>Музичне шоу талантів у Румунії. Сезон 1.</p>
+          <div class="nav-logo">RUMUN<span class="nav-logo-dash">-</span>FACTOR</div>
+          <p>Show de talente muzicale în România. Sezonul 1.</p>
         </div>
 
         <div class="footer-links">
-          <h4>Навігація</h4>
+          <h4>Navigare</h4>
           <ul>
-            <li><a href="#about"      data-target="about">Про шоу</a></li>
-            <li><a href="#categories" data-target="categories">Категорії</a></li>
-            <li><a href="#prize"      data-target="prize">Призи</a></li>
-            <li><a href="#how"        data-target="how">Як взяти участь</a></li>
+            <li><a href="#about"      data-target="about">Despre show</a></li>
+            <li><a href="#categories" data-target="categories">Categorii</a></li>
+            <li><a href="#prize"      data-target="prize">Premiu</a></li>
+            <li><a href="#how"        data-target="how">Cum participi</a></li>
             <li><a href="#faq"        data-target="faq">FAQ</a></li>
-            <li><a href="#register"   data-target="register">Реєстрація</a></li>
+            <li><a href="#register"   data-target="register">Înregistrare</a></li>
           </ul>
         </div>
 
         <div class="footer-links">
-          <h4>Юридичне</h4>
+          <h4>Legal</h4>
           <ul>
-            <li><a href="#" data-link="link-rules"   >Правила конкурсу</a></li>
-            <li><a href="#" data-link="link-gdpr"    >Політика GDPR</a></li>
-            <li><a href="#" data-link="link-cookie"  >Cookie-політика</a></li>
-            <li><a href="#" data-link="link-contact" >Контакти</a></li>
+            <li><a href="#" data-link="link-rules"  >Regulamentul concursului</a></li>
+            <li><a href="#" data-link="link-gdpr"   >Politica GDPR</a></li>
+            <li><a href="#" data-link="link-cookie" >Politica de cookies</a></li>
+            <li><a href="#" data-link="link-contact">Contact</a></li>
           </ul>
         </div>
 

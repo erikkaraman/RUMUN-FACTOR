@@ -1,39 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
 
 /* ============================================================
-   1. ROOT / VARIABLES
+   1. ROOT / DESIGN TOKENS
+   All magic numbers live here — change once, applies everywhere.
    ============================================================ */
 
 :root {
-  --gold:       #C9A84C;
-  --gold-light: #E8C96A;
-  --red:        #B8232A;
-  --dark:       #0A0A0A;
-  --dark2:      #111;
-  --dark3:      #1A1A1A;
-  --mid:        #2A2A2A;
-  --text:       #F0EDE6;
-  --muted:      #888;
-  --display:    'Bebas Neue', sans-serif;
-  --body:       'DM Sans', sans-serif;
+  /* — Brand colors — */
+  --gold:         #C9A84C;
+  --gold-light:   #E8C96A;
+  --red:          #B8232A;
+
+  /* — Neutral palette — */
+  --dark:         #0A0A0A;
+  --dark-2:       #111111;
+  --dark-3:       #1A1A1A;
+  --mid:          #2A2A2A;
+  --text:         #F0EDE6;
+  --muted:        #888888;
+
+  /* — Gold with opacity (avoids repeating rgba everywhere) — */
+  --gold-10:  rgba(201, 168, 76, 0.10);
+  --gold-15:  rgba(201, 168, 76, 0.15);
+  --gold-25:  rgba(201, 168, 76, 0.25);
+  --gold-30:  rgba(201, 168, 76, 0.30);
+  --gold-35:  rgba(201, 168, 76, 0.35);
+  --gold-40:  rgba(201, 168, 76, 0.40);
+  --gold-50:  rgba(201, 168, 76, 0.50);
+
+  /* — Typography — */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  /* — Layout — */
+  --content-w:    1280px;
+  --nav-h:        56px;
+
+  /* — Section overlay: dark semi-transparent backdrop over global bg — */
+  --section-overlay: rgba(10, 10, 10, 0.91);
+
+  /* — Section shell: grey card background (matches form-preview) — */
+  --section-bg:   rgba(26, 26, 26, 0.96);
 }
 
 /* ============================================================
    2. RESET / BASE
    ============================================================ */
 
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background: var(--dark);
   color: var(--text);
-  font-family: var(--body);
+  font-family: var(--font-body);
   overflow-x: hidden;
-  scroll-behavior: smooth;
+  background: var(--dark);
+}
+
+/* Fixed background via pseudo-element.
+   Avoids iOS Safari bug where background-attachment:fixed
+   on <body> does not scale correctly. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("images/bg.avif") center center / cover no-repeat;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    background: url("images/bg-mobile.avif") center center / cover no-repeat;
+  }
 }
 
 .page-wrap {
@@ -41,56 +82,84 @@ body {
   margin: 0 auto;
 }
 
-/* scroll-margin-top — щоб sticky nav не перекривав якорі */
-:root {
-  --nav-h: 56px;
-}
-
-.hero,
-.section,
-.timeline-section,
-.reg-section,
-.prize-section,
-.faq-section {
+/* scroll-margin-top prevents the sticky nav from covering anchor targets */
+.anchor-section {
   scroll-margin-top: var(--nav-h);
 }
 
 /* ============================================================
-   3. NAVIGATION
+   3. SECTION WRAPPERS
+   .section-shell  — grey card backdrop (all content sections)
+   .section-inner  — max-width container + padding inside the card
+   hero & stats-bar intentionally have NO .section-shell (stay transparent)
    ============================================================ */
 
-nav {
+.section-shell {
+  background: var(--section-bg);
+  border-top: 1px solid var(--gold-10);
+  border-bottom: 1px solid var(--gold-10);
+}
+
+.section-inner {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+/* Shared section typography */
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 7vw, 64px);
+  letter-spacing: clamp(1px, 0.4vw, 3px);
+  line-height: 1.05;
+  margin-bottom: 40px;
+}
+
+/* ============================================================
+   4. NAVIGATION
+   ============================================================ */
+
+#site-nav {
   position: sticky;
   top: 0;
   z-index: 100;
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 40px;
+  padding: 0 40px;
   background: rgba(10, 10, 10, 0.92);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  border-bottom: 1px solid var(--gold-15);
   backdrop-filter: blur(10px);
 }
 
-.logo {
-  font-family: var(--display);
+.nav-logo {
+  font-family: var(--font-display);
   font-size: 28px;
   letter-spacing: 3px;
   color: var(--gold);
   line-height: 1;
 }
 
-.logo .dash {
+.nav-logo-dash {
   color: var(--red);
 }
 
-nav ul {
+#navMenu {
   list-style: none;
   display: flex;
   gap: 32px;
 }
 
-nav ul li a {
+#navMenu li a {
   color: var(--muted);
   text-decoration: none;
   font-size: 13px;
@@ -99,7 +168,7 @@ nav ul li a {
   transition: color 0.2s;
 }
 
-nav ul li a:hover {
+#navMenu li a:hover {
   color: var(--gold);
 }
 
@@ -108,7 +177,7 @@ nav ul li a:hover {
   color: var(--dark);
   border: none;
   padding: 10px 24px;
-  font-family: var(--body);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -131,7 +200,7 @@ nav ul li a:hover {
   width: 36px;
   height: 36px;
   background: transparent;
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  border: 1px solid var(--gold-30);
   cursor: pointer;
   padding: 0;
 }
@@ -149,7 +218,7 @@ nav ul li a:hover {
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* ============================================================
-   4. BUTTONS (спільні)
+   5. BUTTONS
    ============================================================ */
 
 .btn-primary {
@@ -157,13 +226,13 @@ nav ul li a:hover {
   color: var(--dark);
   border: none;
   padding: 16px 40px;
-  font-family: var(--body);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .btn-primary:hover {
@@ -176,12 +245,12 @@ nav ul li a:hover {
   color: var(--text);
   border: 1px solid rgba(240, 237, 230, 0.25);
   padding: 16px 40px;
-  font-family: var(--body);
+  font-family: var(--font-body);
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .btn-secondary:hover {
@@ -189,76 +258,52 @@ nav ul li a:hover {
   color: var(--gold);
 }
 
-/* Focus visible — доступність клавіатури */
-.btn-submit:focus-visible,
+/* Keyboard focus ring */
 .btn-primary:focus-visible,
 .btn-secondary:focus-visible,
+.btn-submit:focus-visible,
 .nav-cta:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
 
 /* ============================================================
-   5. HERO
+   6. HERO  (transparent over global bg)
    ============================================================ */
 
 .hero {
   position: relative;
-  min-height: 90vh;
+  height: calc(100svh - var(--nav-h));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  padding: 24px 40px 80px;
+  /* Reduced top padding so nav doesn't eat visible hero height */
+  padding: 12px 40px 24px;
   overflow: hidden;
 }
 
-/* Градієнт зверху */
+/* Top gradient vignette */
 .hero::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  inset: 0 0 auto 0;
   height: 35%;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.3) 60%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
 
-/* Градієнт знизу */
+/* Bottom gradient vignette */
 .hero::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  inset: auto 0 0 0;
   height: 40%;
-  background: linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.35) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 100%);
   z-index: 0;
   pointer-events: none;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: url("images/hero-bg.avif") center / cover no-repeat;
-}
-
-.hero-bg-mobile {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: url("images/hero-bg-mobile.avif") center / cover no-repeat;
-}
-
-.hero-lines {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 79px,
-    rgba(255, 255, 255, 0.02) 79px,
-    rgba(255, 255, 255, 0.02) 80px
-  );
 }
 
 .hero-sub {
@@ -270,7 +315,6 @@ nav ul li a:hover {
   font-weight: 300;
   max-width: 440px;
   line-height: 1.7;
-  margin-top: 8px;
 }
 
 .hero-sub strong {
@@ -278,8 +322,22 @@ nav ul li a:hover {
   font-weight: 400;
 }
 
-.hero-logo-space {
-  flex: 1;
+/* Wrapper carries the shadow so mix-blend-mode on the img stays clean */
+.hero-logo-wrap {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 40px rgba(0, 0, 0, 0.85));
+}
+
+/* ~20% smaller than original (was 60vw / 1040px) */
+.hero-logo-img {
+  width: 48vw;
+  max-width: 830px;
+  min-width: 320px;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  user-select: none;
+  display: block;
 }
 
 .hero-bottom {
@@ -292,29 +350,27 @@ nav ul li a:hover {
   filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
 }
 
-.hero-tag {
+.hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(201, 168, 76, 0.4);
+  border: 1px solid var(--gold-40);
   padding: 6px 16px;
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--gold);
-  position: relative;
-  z-index: 1;
   background: rgba(10, 10, 10, 0.45);
   backdrop-filter: blur(4px);
 }
 
-.hero-tag::before {
-  content: '';
+.hero-badge-dot {
   width: 6px;
   height: 6px;
   background: var(--red);
   border-radius: 50%;
   animation: pulse 1.5s infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -331,11 +387,78 @@ nav ul li a:hover {
   z-index: 1;
 }
 
-.hero-scroll {
+/* ============================================================
+   7. COUNTDOWN
+   ============================================================ */
+
+.hero-countdown {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.hero-countdown-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.hero-countdown-date {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  background: rgba(10,10,10,0.6);
+  border: 1px solid var(--gold-25);
+  padding: 6px 4px 4px;
+}
+
+.cd-unit b {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+  font-weight: normal;
+}
+
+.cd-unit em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.cd-over {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Scroll hint — absolute so it sits at hero bottom without joining flex layout */
+.hero-scroll-hint {
   position: absolute;
-  bottom: 28px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -344,11 +467,12 @@ nav ul li a:hover {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  pointer-events: none;
 }
 
 .scroll-line {
   width: 1px;
-  height: 32px;
+  height: 28px;
   background: linear-gradient(to bottom, var(--muted), transparent);
   animation: scrollDown 2s infinite;
 }
@@ -360,19 +484,24 @@ nav ul li a:hover {
 }
 
 /* ============================================================
-   6. STATS BAR
+   8. STATS BAR  (transparent — between hero and content sections)
    ============================================================ */
 
 .stats-bar {
-  background: var(--dark3);
-  border-top: 1px solid rgba(201, 168, 76, 0.1);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  border-top: 1px solid var(--gold-10);
+  border-bottom: 1px solid var(--gold-10);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.stats-inner {
+  max-width: var(--content-w);
+  margin: 0 auto;
   padding: 28px 40px;
-  flex-wrap: wrap;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 8px;
 }
 
 .stat {
@@ -380,15 +509,15 @@ nav ul li a:hover {
   min-width: 80px;
 }
 
-.stat-n {
-  font-family: var(--display);
+.stat-value {
+  font-family: var(--font-display);
   font-size: clamp(28px, 5vw, 40px);
   color: var(--gold);
   letter-spacing: 2px;
   line-height: 1;
 }
 
-.stat-l {
+.stat-label {
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -406,8 +535,8 @@ nav ul li a:hover {
 .platform-icon {
   color: var(--gold);
   font-size: clamp(28px, 5vw, 40px);
-  transition: color 0.2s, transform 0.2s;
   line-height: 1;
+  transition: color 0.2s, transform 0.2s;
 }
 
 .platform-icon:hover {
@@ -416,33 +545,7 @@ nav ul li a:hover {
 }
 
 /* ============================================================
-   7. SECTIONS (спільні)
-   ============================================================ */
-
-.section {
-  padding: 80px 40px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.section-label {
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-
-.section-title {
-  font-family: var(--display);
-  font-size: clamp(32px, 7vw, 64px);
-  letter-spacing: clamp(1px, 0.4vw, 3px);
-  line-height: 1.05;
-  margin-bottom: 40px;
-}
-
-/* ============================================================
-   8. CATEGORIES
+   9. CATEGORIES
    ============================================================ */
 
 .cats {
@@ -452,17 +555,17 @@ nav ul li a:hover {
 }
 
 .cat {
-  background: var(--dark3);
+  background: var(--dark-3);
   border: 1px solid var(--mid);
   padding: 32px 20px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s;
   position: relative;
   overflow: hidden;
 }
 
-.cat::before {
+.cat::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -474,10 +577,10 @@ nav ul li a:hover {
 
 .cat:hover {
   background: var(--mid);
-  border-color: rgba(201, 168, 76, 0.3);
+  border-color: var(--gold-30);
 }
 
-.cat:hover::before {
+.cat:hover::after {
   transform: scaleX(1);
 }
 
@@ -488,7 +591,7 @@ nav ul li a:hover {
 }
 
 .cat-name {
-  font-family: var(--display);
+  font-family: var(--font-display);
   font-size: 20px;
   letter-spacing: 2px;
   color: var(--text);
@@ -502,27 +605,147 @@ nav ul li a:hover {
 }
 
 /* ============================================================
-   9. TIMELINE
+   10. PRIZE
    ============================================================ */
 
-.timeline-section {
-  background: var(--dark2);
-  padding: 80px 40px;
+.prize-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 32px;
 }
 
-.timeline-inner {
-  max-width: 960px;
-  margin: 0 auto;
+/* --- Main prize card --- */
+
+.prize-card-main {
+  position: relative;
+  border: 1px solid var(--gold-40);
+  background: rgba(201, 168, 76, 0.04);
+  padding: 48px 40px;
+  text-align: center;
+  overflow: hidden;
 }
+
+/* Radial glow behind the card */
+.prize-card-main-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.prize-card-main-crown {
+  font-size: 48px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.prize-card-main-title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.prize-card-main-amount {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 8vw, 88px);
+  color: var(--gold);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.prize-card-main-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold-40);
+  margin: 0 auto 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.prize-card-main-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Benefits grid --- */
+
+.prize-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prize-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--dark-3);
+  border: 1px solid var(--mid);
+  padding: 24px;
+  transition: border-color 0.2s;
+}
+
+.prize-benefit:hover {
+  border-color: var(--gold-25);
+}
+
+.prize-benefit-icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.prize-benefit-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.prize-benefit-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.prize-note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.3px;
+  padding-top: 8px;
+  border-top: 1px solid var(--gold-10);
+}
+
+/* ============================================================
+   11. TIMELINE
+   ============================================================ */
 
 .steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 0;
-  margin-top: 40px;
   position: relative;
+  margin-top: 8px;
 }
 
+/* Horizontal connector line */
 .steps::before {
   content: '';
   position: absolute;
@@ -541,21 +764,21 @@ nav ul li a:hover {
 .step-num {
   width: 56px;
   height: 56px;
-  border: 1px solid rgba(201, 168, 76, 0.4);
+  border: 1px solid var(--gold-40);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  font-family: var(--display);
+  font-family: var(--font-display);
   font-size: 24px;
   color: var(--gold);
-  background: var(--dark2);
+  background: var(--dark-2);
   position: relative;
   z-index: 1;
 }
 
 .step-title {
-  font-family: var(--display);
+  font-family: var(--font-display);
   font-size: 18px;
   letter-spacing: 2px;
   margin-bottom: 8px;
@@ -569,42 +792,113 @@ nav ul li a:hover {
 }
 
 /* ============================================================
-   10. REGISTRATION FORM — SINGLE STEP
+   12. FAQ
    ============================================================ */
 
-.reg-section {
-  padding: 80px 40px;
-  max-width: 960px;
-  margin: 0 auto;
+.faq-list {
+  margin-top: 8px;
 }
 
-/* Обгортка у стилі браузерного вікна */
-.form-preview {
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-question {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  transition: color 0.2s;
+}
+
+.faq-question:hover {
+  color: var(--gold);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--gold-40);
+  position: relative;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--gold);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.faq-icon::before { width: 8px; height: 1px; }
+.faq-icon::after  { width: 1px; height: 8px; transition: transform 0.25s; }
+
+.faq-item.open .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+  padding: 0 0 20px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* ============================================================
+   13. REGISTRATION FORM
+   ============================================================ */
+
+/* Browser-window style wrapper — inherits grey bg from .section-shell */
+.form-shell {
   border: 1px solid var(--mid);
-  background: var(--dark3);
+  background: var(--dark-3);
   overflow: hidden;
 }
 
-.form-header {
+/* Titlebar (decorative chrome dots) */
+.form-titlebar {
   background: var(--mid);
   padding: 16px 24px;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  border-bottom: 1px solid var(--gold-10);
 }
 
-.dot {
+.titlebar-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
 }
 
-.dot.r { background: var(--red); }
-.dot.y { background: #C9A84C; }
-.dot.g { background: #3A7D44; }
+.titlebar-dot--red    { background: var(--red); }
+.titlebar-dot--yellow { background: var(--gold); }
+.titlebar-dot--green  { background: #3A7D44; }
 
-.form-header-title {
+.titlebar-label {
   font-size: 12px;
   color: var(--muted);
   letter-spacing: 1px;
@@ -612,13 +906,7 @@ nav ul li a:hover {
   text-transform: uppercase;
 }
 
-/* --- Form body --- */
-
-.form-body {
-  padding: 0;
-}
-
-/* --- Секції форми --- */
+/* --- Form blocks --- */
 
 .form-block {
   padding: 28px 28px 8px;
@@ -637,14 +925,10 @@ nav ul li a:hover {
   color: var(--gold);
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  border-bottom: 1px solid var(--gold-15);
 }
 
-/* --- Form fields --- */
-
-.field {
-  position: relative;
-}
+/* --- Form layout --- */
 
 .form-row {
   display: grid;
@@ -653,8 +937,14 @@ nav ul li a:hover {
   margin-bottom: 16px;
 }
 
-.form-row.single {
+.form-row--full {
   grid-template-columns: 1fr;
+}
+
+/* --- Fields --- */
+
+.field {
+  position: relative;
 }
 
 .field label {
@@ -674,7 +964,7 @@ nav ul li a:hover {
   border: 1px solid var(--mid);
   color: var(--text);
   padding: 10px 14px;
-  font-family: var(--body);
+  font-family: var(--font-body);
   font-size: 13px;
   outline: none;
   transition: border-color 0.2s;
@@ -683,7 +973,7 @@ nav ul li a:hover {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: rgba(201, 168, 76, 0.5);
+  border-color: var(--gold-50);
 }
 
 .field textarea {
@@ -691,7 +981,7 @@ nav ul li a:hover {
   min-height: 80px;
 }
 
-/* Select — кастомна стрілка */
+/* Custom select arrow */
 .field select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
@@ -707,9 +997,7 @@ nav ul li a:hover {
   display: none;
 }
 
-.field.has-error .field-error {
-  display: block;
-}
+.field.has-error .field-error { display: block; }
 
 .field.has-error input,
 .field.has-error select,
@@ -717,20 +1005,18 @@ nav ul li a:hover {
   border-color: rgba(184, 35, 42, 0.7);
 }
 
-/* Label hint */
+/* Utility text variants */
 .label-hint {
   font-size: 11px;
   font-weight: 300;
   color: var(--muted);
 }
 
-/* Required asterisk */
 .required {
   color: var(--red);
 }
 
-/* Story counter */
-.story-count {
+.char-count {
   font-size: 11px;
   color: var(--muted);
 }
@@ -780,7 +1066,7 @@ nav ul li a:hover {
   background: transparent;
 }
 
-.file-drop-text {
+.file-drop-content {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -796,30 +1082,17 @@ nav ul li a:hover {
   transition: color 0.2s;
 }
 
-.file-drop-icon--ok {
-  color: #3A7D44;
-}
+.file-drop-icon--ok  { color: #3A7D44; }
+.file-drop-icon--err { color: var(--red); }
 
-.file-drop:hover {
-  border-color: rgba(201, 168, 76, 0.4);
-  background: rgba(201, 168, 76, 0.03);
-}
+.file-drop:hover           { border-color: var(--gold-40); background: rgba(201, 168, 76, 0.03); }
+.file-drop.drag-over       { border-color: var(--gold); background: rgba(201, 168, 76, 0.06); }
+.file-drop.has-file        { border-color: rgba(58, 125, 68, 0.5); border-style: solid; }
+.file-drop.has-file .file-drop-content { color: var(--text); }
+.file-drop.has-error       { border-color: rgba(184, 35, 42, 0.7); border-style: solid; }
+.file-drop.has-error .file-drop-content { color: var(--red); }
 
-.file-drop.drag-over {
-  border-color: var(--gold);
-  background: rgba(201, 168, 76, 0.06);
-}
-
-.file-drop.has-file {
-  border-color: rgba(58, 125, 68, 0.5);
-  border-style: solid;
-}
-
-.file-drop.has-file .file-drop-text {
-  color: var(--text);
-}
-
-/* --- Checkbox labels --- */
+/* --- Consent checkboxes --- */
 
 .consent-list {
   display: flex;
@@ -828,7 +1101,7 @@ nav ul li a:hover {
   margin-bottom: 24px;
 }
 
-.consent-label {
+.consent-row {
   display: flex;
   gap: 12px;
   align-items: flex-start;
@@ -838,7 +1111,7 @@ nav ul li a:hover {
   line-height: 1.5;
 }
 
-.consent-label input[type="checkbox"] {
+.consent-row input[type="checkbox"] {
   margin-top: 3px;
   accent-color: var(--gold);
   flex-shrink: 0;
@@ -846,12 +1119,9 @@ nav ul li a:hover {
   height: 15px;
 }
 
-.consent-label strong {
-  color: var(--text);
-}
+.consent-row strong { color: var(--text); }
 
-/* Необов'язкова згода — менш помітна */
-.consent-label--optional {
+.consent-row--optional {
   opacity: 0.6;
   font-size: 12px;
   margin-top: 4px;
@@ -859,13 +1129,22 @@ nav ul li a:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.consent-note {
+.form-note {
   font-size: 11px;
   color: var(--muted);
   margin-top: 12px;
   text-align: center;
   letter-spacing: 0.3px;
 }
+
+/* Inline link style */
+.link-accent {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link-accent:hover { color: var(--gold-light); }
 
 /* --- Submit button --- */
 
@@ -875,25 +1154,17 @@ nav ul li a:hover {
   background: var(--gold);
   color: var(--dark);
   border: none;
-  font-family: var(--body);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s;
 }
 
-.btn-submit:hover {
-  background: var(--gold-light);
-}
-
-.btn-submit:disabled {
-  background: var(--mid);
-  color: var(--muted);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
+.btn-submit:hover    { background: var(--gold-light); }
+.btn-submit:disabled { background: var(--mid); color: var(--muted); cursor: not-allowed; opacity: 0.5; }
 
 /* --- Success screen --- */
 
@@ -904,27 +1175,56 @@ nav ul li a:hover {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.success-screen.show {
-  display: block;
+.success-screen.show { display: block; }
+
+.success-icon   { font-size: 48px; margin-bottom: 16px; }
+.success-title  { font-family: var(--font-display); font-size: 32px; letter-spacing: 3px; color: var(--gold); margin-bottom: 12px; }
+.success-number { font-size: 24px; font-weight: 300; color: var(--text); margin-bottom: 8px; }
+.success-sub    { font-size: 13px; color: var(--muted); }
+
+.success-steps {
+  margin: 24px auto 0;
+  max-width: 400px;
+  text-align: left;
 }
 
-.success-icon  { font-size: 48px; margin-bottom: 16px; }
-.success-title { font-family: var(--display); font-size: 32px; letter-spacing: 3px; color: var(--gold); margin-bottom: 12px; }
-.success-num   { font-size: 24px; font-weight: 300; color: var(--text); margin-bottom: 8px; }
-.success-sub   { font-size: 13px; color: var(--muted); }
+.success-steps p {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.success-steps ol {
+  padding-left: 20px;
+}
+
+.success-steps ol li {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.success-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
 
 /* ============================================================
-   11. FOOTER
+   14. FOOTER
    ============================================================ */
 
-footer {
-  background: var(--dark2);
-  border-top: 1px solid rgba(201, 168, 76, 0.1);
+#site-footer {
+  background: var(--dark-2);
+  border-top: 1px solid var(--gold-10);
   padding: 48px 40px 32px;
 }
 
 .footer-inner {
-  max-width: 960px;
+  max-width: var(--content-w);
   margin: 0 auto;
 }
 
@@ -968,9 +1268,7 @@ footer {
   transition: color 0.2s;
 }
 
-.footer-links ul li a:hover {
-  color: var(--text);
-}
+.footer-links ul li a:hover { color: var(--text); }
 
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -982,13 +1280,10 @@ footer {
   gap: 12px;
 }
 
-.footer-bottom p {
-  font-size: 12px;
-  color: var(--muted);
-}
+.footer-bottom p { font-size: 12px; color: var(--muted); }
 
 .gdpr-badge {
-  border: 1px solid rgba(201, 168, 76, 0.25);
+  border: 1px solid var(--gold-25);
   padding: 4px 12px;
   font-size: 11px;
   letter-spacing: 1px;
@@ -996,35 +1291,32 @@ footer {
 }
 
 /* ============================================================
-   12. RESPONSIVE — Tablet (≤ 768px)
+   15. RESPONSIVE — Tablet (≤ 768px)
    ============================================================ */
 
 @media (max-width: 768px) {
 
   /* Nav */
-  nav {
-    padding: 12px 20px;
-    position: sticky;
-  }
+  #site-nav { padding: 0 20px; }
 
   .nav-hamburger { display: flex; }
   .nav-cta       { display: none; }
 
-  nav ul {
+  #navMenu {
     display: none;
     flex-direction: column;
     position: absolute;
     top: 100%; left: 0; right: 0;
     background: rgba(10, 10, 10, 0.98);
-    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    border-bottom: 1px solid var(--gold-15);
     padding: 8px 0;
     gap: 0;
     z-index: 99;
   }
 
-  nav ul.open { display: flex; }
+  #navMenu.open { display: flex; }
 
-  nav ul li a {
+  #navMenu li a {
     display: block;
     padding: 14px 24px;
     font-size: 15px;
@@ -1032,31 +1324,46 @@ footer {
   }
 
   /* Hero */
-  .hero-bg        { display: none; }
-  .hero-bg-mobile { display: block; }
-  .hero           { padding: 16px 20px 64px; min-height: 85vh; }
-  .hero-sub       { font-size: 14px; max-width: 100%; }
-  .hero-btns      { flex-direction: column; align-items: center; gap: 10px; }
+  .hero         { padding: 8px 20px 48px; }
+  .hero-sub     { font-size: 14px; max-width: 100%; }
+  .hero-btns    { flex-direction: column; align-items: center; gap: 10px; }
+
+  .hero-logo-img {
+    width: 72vw;
+    max-width: 320px;
+    min-width: unset;
+  }
 
   .btn-primary,
-  .btn-secondary  { width: 100%; max-width: 300px; padding: 15px 32px; }
+  .btn-secondary { width: 100%; max-width: 300px; padding: 15px 32px; }
 
   /* Stats */
-  .stats-bar { padding: 20px 16px; gap: 12px; }
-  .stat-n    { font-size: 28px; }
+  .stats-inner {
+    padding: 20px 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Platforms block spans full width on mobile */
+  .stats-inner .stat:last-child {
+    grid-column: 1 / -1;
+  }
+  .stat-value  { font-size: 28px; }
 
   /* Sections */
-  .section       { padding: 56px 20px; }
+  .section-inner { padding: 56px 20px; }
   .section-title { letter-spacing: clamp(0px, 0.3vw, 1px); }
 
   /* Categories */
   .cats { grid-template-columns: repeat(2, 1fr); }
   .cat  { padding: 24px 16px; }
 
+  /* Prize */
+  .prize-layout { grid-template-columns: 1fr; gap: 16px; }
+
   /* Timeline */
-  .timeline-section { padding: 56px 20px; }
-  .steps            { grid-template-columns: 1fr; }
-  .steps::before    { display: none; }
+  .steps         { grid-template-columns: 1fr; }
+  .steps::before { display: none; }
 
   .step {
     padding: 16px 0;
@@ -1068,28 +1375,31 @@ footer {
 
   .step-num   { margin: 0; flex-shrink: 0; width: 44px; height: 44px; font-size: 18px; }
   .step-title { margin-bottom: 4px; }
+  .step-body  { flex: 1; }
+
+  /* Countdown */
+  .cd-unit b { font-size: 22px; }
+  .cd-unit   { min-width: 40px; }
 
   /* Form */
-  .reg-section  { padding: 56px 20px; }
-  .form-row     { grid-template-columns: 1fr; }
-  .form-block   { padding: 20px 16px 4px; }
+  .form-row   { grid-template-columns: 1fr; }
+  .form-block { padding: 20px 16px 4px; }
   .form-block--last { padding-bottom: 20px; }
-
   .field textarea { min-height: 120px; }
 
-  /* Prevent iOS auto-zoom */
+  /* Prevent iOS auto-zoom on form inputs */
   .field input,
   .field select,
   .field textarea { font-size: 16px; }
 
   /* Footer */
-  footer         { padding: 40px 20px 24px; }
+  #site-footer   { padding: 40px 20px 24px; }
   .footer-top    { flex-direction: column; gap: 24px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 
 /* ============================================================
-   13. RESPONSIVE — Small mobile (≤ 380px)
+   16. RESPONSIVE — Small mobile (≤ 380px)
    ============================================================ */
 
 @media (max-width: 380px) {
@@ -1097,292 +1407,4 @@ footer {
 
   .btn-primary,
   .btn-secondary { max-width: 100%; }
-
-  .stats-bar { justify-content: space-between; }
-}
-
-/* ============================================================
-   14. COUNTDOWN
-   ============================================================ */
-
-.hero-deadline {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  margin-top: 8px;
-}
-
-.hero-deadline-label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-.hero-deadline-date {
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
-.cd-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 48px;
-  background: rgba(10,10,10,0.6);
-  border: 1px solid rgba(201,168,76,0.25);
-  padding: 6px 4px 4px;
-}
-
-.cd-unit b {
-  font-family: var(--display);
-  font-size: 28px;
-  color: var(--gold);
-  line-height: 1;
-  font-weight: normal;
-}
-
-.cd-unit em {
-  font-style: normal;
-  font-size: 9px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 2px;
-}
-
-.cd-over {
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ============================================================
-   15. PRIZE
-   ============================================================ */
-
-.prize-section {
-  padding: 80px 40px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.prize-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2px;
-  margin-bottom: 24px;
-}
-
-.prize-card {
-  background: var(--dark3);
-  border: 1px solid var(--mid);
-  padding: 32px 24px;
-  text-align: center;
-  transition: border-color 0.2s;
-}
-
-.prize-card:hover {
-  border-color: rgba(201,168,76,0.3);
-}
-
-.prize-card--main {
-  border-color: rgba(201,168,76,0.35);
-  background: rgba(201,168,76,0.04);
-}
-
-.prize-place {
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-
-.prize-amount {
-  font-family: var(--display);
-  font-size: clamp(32px, 5vw, 48px);
-  color: var(--gold);
-  letter-spacing: 2px;
-  line-height: 1;
-  margin-bottom: 12px;
-}
-
-.prize-desc {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.prize-note {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  letter-spacing: 0.3px;
-}
-
-.prize-note strong {
-  color: var(--text);
-}
-
-/* ============================================================
-   16. FAQ
-   ============================================================ */
-
-.faq-section {
-  background: var(--dark2);
-  padding: 80px 40px;
-}
-
-.faq-inner {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.faq-list {
-  margin-top: 8px;
-}
-
-.faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.faq-item:first-child {
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-.faq-q {
-  width: 100%;
-  background: transparent;
-  border: none;
-  padding: 20px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  text-align: left;
-  font-family: var(--body);
-  font-size: 15px;
-  color: var(--text);
-  letter-spacing: 0.2px;
-}
-
-.faq-q:hover {
-  color: var(--gold);
-}
-
-.faq-icon {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border: 1px solid rgba(201,168,76,0.4);
-  position: relative;
-}
-
-.faq-icon::before,
-.faq-icon::after {
-  content: '';
-  position: absolute;
-  background: var(--gold);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.faq-icon::before { width: 8px; height: 1px; }
-.faq-icon::after  { width: 1px; height: 8px; transition: transform 0.25s; }
-
-.faq-item.open .faq-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.faq-a {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.faq-a p {
-  padding: 0 0 20px;
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 680px;
-}
-
-/* ============================================================
-   17. SUCCESS SCREEN (оновлений)
-   ============================================================ */
-
-.success-next {
-  margin: 24px auto 0;
-  max-width: 400px;
-  text-align: left;
-}
-
-.success-next p {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-}
-
-.success-next ol {
-  padding-left: 20px;
-}
-
-.success-next ol li {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-
-.success-actions {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-/* ============================================================
-   18. CONSENT LINK
-   ============================================================ */
-
-.consent-link {
-  color: var(--gold);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.consent-link:hover {
-  color: var(--gold-light);
-}
-
-/* ============================================================
-   19. RESPONSIVE — нові блоки
-   ============================================================ */
-
-@media (max-width: 768px) {
-  .prize-section { padding: 56px 20px; }
-  .faq-section   { padding: 56px 20px; }
-
-  .cd-unit b  { font-size: 22px; }
-  .cd-unit    { min-width: 40px; }
-
-  .prize-cards { grid-template-columns: 1fr; }
-
-  .scroll-margin-top-fix {
-    scroll-margin-top: 56px;
-  }
 }
