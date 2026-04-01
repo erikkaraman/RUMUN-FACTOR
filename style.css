@@ -18,6 +18,7 @@
   --mid:          #2A2A2A;
   --text:         #F0EDE6;
   --muted:        #888888;
+  --text-25:      rgba(240, 237, 230, 0.25);
 
   /* — Gold with opacity (avoids repeating rgba everywhere) — */
   --gold-10:  rgba(201, 168, 76, 0.10);
@@ -32,14 +33,18 @@
   --font-display: 'Bebas Neue', sans-serif;
   --font-body:    'DM Sans', sans-serif;
 
-  /* — Layout — */
+  /* — Layout grid — */
+  --cols:         12;
+  --gutter:       24px;
   --content-w:    1280px;
   --nav-h:        56px;
+  --section-v-pad: 80px;
+  --section-h-pad: 40px;
 
   /* — Section overlay: dark semi-transparent backdrop over global bg — */
   --section-overlay: rgba(10, 10, 10, 0.91);
 
-  /* — Section shell: grey card background (matches form-preview) — */
+  /* — Section shell: grey card background — */
   --section-bg:   rgba(26, 26, 26, 0.96);
 }
 
@@ -78,7 +83,7 @@ body::before {
 }
 
 .page-wrap {
-  max-width: 1920px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -89,9 +94,9 @@ body::before {
 
 /* ============================================================
    3. SECTION WRAPPERS
-   .section-shell  — grey card backdrop (all content sections)
-   .section-inner  — max-width container + padding inside the card
-   hero & stats-bar intentionally have NO .section-shell (stay transparent)
+   .section-shell — повноширинний фон секції
+   .section-inner — 12-колонковий grid-контейнер, max 1280px
+   hero & stats-bar — без .section-shell (прозорі)
    ============================================================ */
 
 .section-shell {
@@ -103,24 +108,30 @@ body::before {
 .section-inner {
   max-width: var(--content-w);
   margin: 0 auto;
-  padding: 80px 40px;
+  padding: var(--section-v-pad) var(--section-h-pad);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--gutter);
+  align-items: start;
 }
 
-/* Shared section typography */
+/* Shared section typography — завжди на всю ширину */
 .section-label {
+  grid-column: 1 / -1;
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .section-title {
+  grid-column: 1 / -1;
   font-family: var(--font-display);
   font-size: clamp(32px, 7vw, 64px);
   letter-spacing: clamp(1px, 0.4vw, 3px);
   line-height: 1.05;
-  margin-bottom: 40px;
+  margin-bottom: 0;
 }
 
 /* ============================================================
@@ -132,10 +143,10 @@ body::before {
   top: 0;
   z-index: 100;
   height: var(--nav-h);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 var(--section-h-pad);
   background: rgba(10, 10, 10, 0.92);
   border-bottom: 1px solid var(--gold-15);
   backdrop-filter: blur(10px);
@@ -147,25 +158,37 @@ body::before {
   letter-spacing: 3px;
   color: var(--gold);
   line-height: 1;
+  white-space: nowrap;
 }
 
 .nav-logo-dash {
   color: var(--red);
 }
 
+.nav-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 #navMenu {
   list-style: none;
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 0;
 }
 
 #navMenu li a {
+  display: block;
+  white-space: nowrap;
+  padding: 0 16px;
   color: var(--muted);
   text-decoration: none;
   font-size: 13px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: color 0.2s;
+  line-height: var(--nav-h);
 }
 
 #navMenu li a:hover {
@@ -184,6 +207,7 @@ body::before {
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s;
+  white-space: nowrap;
 }
 
 .nav-cta:hover {
@@ -243,7 +267,7 @@ body::before {
 .btn-secondary {
   background: transparent;
   color: var(--text);
-  border: 1px solid rgba(240, 237, 230, 0.25);
+  border: 1px solid var(--text-25);
   padding: 16px 40px;
   font-family: var(--font-body);
   font-size: 14px;
@@ -279,8 +303,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  /* Reduced top padding so nav doesn't eat visible hero height */
-  padding: 12px 40px 24px;
+  padding: 12px var(--section-h-pad) 24px;
   overflow: hidden;
 }
 
@@ -329,7 +352,6 @@ body::before {
   filter: drop-shadow(0 4px 40px rgba(0, 0, 0, 0.85));
 }
 
-/* ~20% smaller than original (was 60vw / 1040px) */
 .hero-logo-img {
   width: 48vw;
   max-width: 830px;
@@ -452,7 +474,7 @@ body::before {
   color: var(--muted);
 }
 
-/* Scroll hint — absolute so it sits at hero bottom without joining flex layout */
+/* Scroll hint */
 .hero-scroll-hint {
   position: absolute;
   bottom: 16px;
@@ -497,7 +519,7 @@ body::before {
 .stats-inner {
   max-width: var(--content-w);
   margin: 0 auto;
-  padding: 28px 40px;
+  padding: 28px var(--section-h-pad);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
@@ -548,9 +570,11 @@ body::before {
    9. CATEGORIES
    ============================================================ */
 
+/* .cats займає всі 12 колонок і розподіляє картки рівномірно */
 .cats {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2px;
 }
 
@@ -608,23 +632,32 @@ body::before {
    10. PRIZE
    ============================================================ */
 
-.prize-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: start;
-  margin-bottom: 32px;
-}
-
-/* --- Main prize card --- */
-
+/* Картка призу — ліві 6 колонок, benefits — праві 6 */
 .prize-card-main {
+  grid-column: 1 / 7;
   position: relative;
   border: 1px solid var(--gold-40);
   background: rgba(201, 168, 76, 0.04);
   padding: 48px 40px;
   text-align: center;
   overflow: hidden;
+}
+
+.prize-benefits {
+  grid-column: 7 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prize-note {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.3px;
+  padding-top: 8px;
+  border-top: 1px solid var(--gold-10);
 }
 
 /* Radial glow behind the card */
@@ -682,14 +715,7 @@ body::before {
   z-index: 1;
 }
 
-/* --- Benefits grid --- */
-
-.prize-benefits {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
+/* Benefits */
 .prize-benefit {
   display: flex;
   align-items: flex-start;
@@ -725,24 +751,17 @@ body::before {
   line-height: 1.6;
 }
 
-.prize-note {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  letter-spacing: 0.3px;
-  padding-top: 8px;
-  border-top: 1px solid var(--gold-10);
-}
-
 /* ============================================================
    11. TIMELINE
    ============================================================ */
 
+/* Steps займають всі 12 колонок */
 .steps {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   position: relative;
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 /* Horizontal connector line */
@@ -795,8 +814,10 @@ body::before {
    12. FAQ
    ============================================================ */
 
+/* FAQ список — 8 колонок по центру (col 3–10) */
 .faq-list {
-  margin-top: 8px;
+  grid-column: 3 / 11;
+  margin-top: 0;
 }
 
 .faq-item {
@@ -864,21 +885,21 @@ body::before {
   font-size: 13px;
   color: var(--muted);
   line-height: 1.7;
-  max-width: 680px;
 }
 
 /* ============================================================
    13. REGISTRATION FORM
    ============================================================ */
 
-/* Browser-window style wrapper — inherits grey bg from .section-shell */
+/* Форма — 8 колонок по центру (col 3–10) */
 .form-shell {
+  grid-column: 3 / 11;
   border: 1px solid var(--mid);
   background: var(--dark-3);
   overflow: hidden;
 }
 
-/* Titlebar (decorative chrome dots) */
+/* Titlebar */
 .form-titlebar {
   background: var(--mid);
   padding: 16px 24px;
@@ -1168,13 +1189,9 @@ body::before {
 
 /* --- Success screen --- */
 
-.success-screen {
-  display: none;
-  padding: 48px 24px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.3);
-}
-
+/* JS додає/знімає клас .hidden — display контролює CSS */
+.form-body.hidden   { display: none; }
+.success-screen     { display: none; padding: 48px 24px; text-align: center; background: rgba(0, 0, 0, 0.3); }
 .success-screen.show { display: block; }
 
 .success-icon   { font-size: 48px; margin-bottom: 16px; }
@@ -1220,22 +1237,21 @@ body::before {
 #site-footer {
   background: var(--dark-2);
   border-top: 1px solid var(--gold-10);
-  padding: 48px 40px 32px;
+  padding: 48px var(--section-h-pad) 32px;
 }
 
 .footer-inner {
   max-width: var(--content-w);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--gutter);
 }
 
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 32px;
-  margin-bottom: 40px;
-}
+/* Brand — 4 колонки, навігація і legal — по 3 колонки кожна */
+.footer-brand              { grid-column: 1 / 5; }
+.footer-links:nth-child(2) { grid-column: 6 / 9; }
+.footer-links:nth-child(3) { grid-column: 10 / 13; }
 
 .footer-brand p {
   font-size: 13px;
@@ -1271,6 +1287,7 @@ body::before {
 .footer-links ul li a:hover { color: var(--text); }
 
 .footer-bottom {
+  grid-column: 1 / -1;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding-top: 24px;
   display: flex;
@@ -1291,14 +1308,30 @@ body::before {
 }
 
 /* ============================================================
-   15. RESPONSIVE — Tablet (≤ 768px)
+   15. RESPONSIVE — Tablet (≤ 1024px)
    ============================================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
-  /* Nav */
-  #site-nav { padding: 0 20px; }
+  :root {
+    --cols:   8;
+    --gutter: 20px;
+  }
 
+  /* FAQ і форма — на всю ширину */
+  .faq-list  { grid-column: 1 / -1; }
+  .form-shell { grid-column: 1 / -1; }
+
+  /* Prize — вертикально */
+  .prize-card-main { grid-column: 1 / -1; }
+  .prize-benefits  { grid-column: 1 / -1; }
+
+  /* Footer — brand на всю ширину, лінки поруч */
+  .footer-brand                { grid-column: 1 / -1; }
+  .footer-links:nth-of-type(1) { grid-column: 1 / 4; }
+  .footer-links:nth-of-type(2) { grid-column: 5 / 9; }
+
+  /* Nav — бургер з 1024px */
   .nav-hamburger { display: flex; }
   .nav-cta       { display: none; }
 
@@ -1321,10 +1354,24 @@ body::before {
     padding: 14px 24px;
     font-size: 15px;
     letter-spacing: 0.5px;
+    line-height: 1;
+  }
+}
+
+/* ============================================================
+   16. RESPONSIVE — Mobile (≤ 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  :root {
+    --cols:          4;
+    --gutter:        16px;
+    --section-v-pad: 56px;
+    --section-h-pad: 20px;
   }
 
   /* Hero */
-  .hero         { padding: 8px 20px 48px; }
   .hero-sub     { font-size: 14px; max-width: 100%; }
   .hero-btns    { flex-direction: column; align-items: center; gap: 10px; }
 
@@ -1339,30 +1386,23 @@ body::before {
 
   /* Stats */
   .stats-inner {
-    padding: 20px 16px;
+    padding: 20px var(--section-h-pad);
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
-  /* Platforms block spans full width on mobile */
-  .stats-inner .stat:last-child {
-    grid-column: 1 / -1;
-  }
+  .stats-inner .stat:last-child { grid-column: 1 / -1; }
   .stat-value  { font-size: 28px; }
 
-  /* Sections */
-  .section-inner { padding: 56px 20px; }
+  /* Section title */
   .section-title { letter-spacing: clamp(0px, 0.3vw, 1px); }
 
-  /* Categories */
+  /* Categories — 2 колонки */
   .cats { grid-template-columns: repeat(2, 1fr); }
   .cat  { padding: 24px 16px; }
 
-  /* Prize */
-  .prize-layout { grid-template-columns: 1fr; gap: 16px; }
-
-  /* Timeline */
-  .steps         { grid-template-columns: 1fr; }
+  /* Timeline — 1 колонка */
+  .steps { grid-template-columns: 1fr; }
   .steps::before { display: none; }
 
   .step {
@@ -1392,14 +1432,13 @@ body::before {
   .field select,
   .field textarea { font-size: 16px; }
 
-  /* Footer */
-  #site-footer   { padding: 40px 20px 24px; }
-  .footer-top    { flex-direction: column; gap: 24px; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  /* Footer — все в одну колонку */
+  .footer-links:nth-of-type(1),
+  .footer-links:nth-of-type(2) { grid-column: 1 / -1; }
 }
 
 /* ============================================================
-   16. RESPONSIVE — Small mobile (≤ 380px)
+   17. RESPONSIVE — Small mobile (≤ 380px)
    ============================================================ */
 
 @media (max-width: 380px) {

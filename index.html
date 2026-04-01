@@ -18,12 +18,6 @@
   <nav id="site-nav">
     <div class="nav-logo">RUMUN<span class="nav-logo-dash">-</span>FACTOR</div>
 
-    <button class="nav-hamburger" id="navToggle" aria-label="Meniu" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
     <ul id="navMenu">
       <li><a href="#about"      data-target="about">Despre show</a></li>
       <li><a href="#categories" data-target="categories">Categorii</a></li>
@@ -33,7 +27,14 @@
       <li><a href="#register"   data-target="register">Înregistrare</a></li>
     </ul>
 
-    <button class="nav-cta" id="navCtaBtn">Aplică acum</button>
+    <div class="nav-end">
+      <button class="nav-hamburger" id="navToggle" aria-label="Meniu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <button class="nav-cta" id="navCtaBtn">Aplică acum</button>
+    </div>
   </nav>
 
   <!-- ============================================================
@@ -66,10 +67,6 @@
       <div class="hero-countdown-date">Termen limită: 30 mai 2026</div>
     </div>
 
-    <div class="hero-scroll-hint">
-      <span>scroll</span>
-      <div class="scroll-line"></div>
-    </div>
   </section>
 
   <!-- ============================================================
@@ -145,52 +142,48 @@
       <div class="section-label">Recompense</div>
       <div class="section-title">MARELE<br>PREMIU</div>
 
-      <div class="prize-layout">
+      <div class="prize-card-main">
+        <div class="prize-card-main-glow"></div>
+        <div class="prize-card-main-crown">👑</div>
+        <div class="prize-card-main-title">Câștigătorul absolut</div>
+        <div class="prize-card-main-amount">20 000 €</div>
+        <div class="prize-card-main-divider"></div>
+        <p class="prize-card-main-desc">
+          Un singur câștigător sau grup câștigător primește premiul în bani
+          și o șansă unică de a deveni parte din povestea RUMUN.
+        </p>
+      </div>
 
-        <div class="prize-card-main">
-          <div class="prize-card-main-glow"></div>
-          <div class="prize-card-main-crown">👑</div>
-          <div class="prize-card-main-title">Câștigătorul absolut</div>
-          <div class="prize-card-main-amount">20 000 €</div>
-          <div class="prize-card-main-divider"></div>
-          <p class="prize-card-main-desc">
-            Un singur câștigător sau grup câștigător primește premiul în bani
-            și o șansă unică de a deveni parte din povestea RUMUN.
-          </p>
-        </div>
-
-        <div class="prize-benefits">
-          <div class="prize-benefit">
-            <div class="prize-benefit-icon">🎤</div>
-            <div class="prize-benefit-body">
-              <div class="prize-benefit-title">Alătură-te trupei RUMUN</div>
-              <div class="prize-benefit-desc">Câștigătorul primește șansa de a face parte din trupa RUMUN — proiectul muzical în jurul căruia este construit show-ul.</div>
-            </div>
-          </div>
-          <div class="prize-benefit">
-            <div class="prize-benefit-icon">💰</div>
-            <div class="prize-benefit-body">
-              <div class="prize-benefit-title">Premiu în bani — 20 000 €</div>
-              <div class="prize-benefit-desc">Premiu cash acordat câștigătorului absolut al competiției, fără împărțire.</div>
-            </div>
-          </div>
-          <div class="prize-benefit">
-            <div class="prize-benefit-icon">📣</div>
-            <div class="prize-benefit-body">
-              <div class="prize-benefit-title">Promovare media</div>
-              <div class="prize-benefit-desc">Campanie de PR pe toate platformele proiectului RUMUN-FACTOR: YouTube, Instagram, TikTok, Facebook.</div>
-            </div>
-          </div>
-          <div class="prize-benefit">
-            <div class="prize-benefit-icon">🎬</div>
-            <div class="prize-benefit-body">
-              <div class="prize-benefit-title">Prezență pe scenă</div>
-              <div class="prize-benefit-desc">Apariție în producțiile video și prestații alături de trupa RUMUN.</div>
-            </div>
+      <div class="prize-benefits">
+        <div class="prize-benefit">
+          <div class="prize-benefit-icon">🎤</div>
+          <div class="prize-benefit-body">
+            <div class="prize-benefit-title">Alătură-te trupei RUMUN</div>
+            <div class="prize-benefit-desc">Câștigătorul primește șansa de a face parte din trupa RUMUN — proiectul muzical în jurul căruia este construit show-ul.</div>
           </div>
         </div>
-
-      </div><!-- /.prize-layout -->
+        <div class="prize-benefit">
+          <div class="prize-benefit-icon">💰</div>
+          <div class="prize-benefit-body">
+            <div class="prize-benefit-title">Premiu în bani — 20 000 €</div>
+            <div class="prize-benefit-desc">Premiu cash acordat câștigătorului absolut al competiției, fără împărțire.</div>
+          </div>
+        </div>
+        <div class="prize-benefit">
+          <div class="prize-benefit-icon">📣</div>
+          <div class="prize-benefit-body">
+            <div class="prize-benefit-title">Promovare media</div>
+            <div class="prize-benefit-desc">Campanie de PR pe toate platformele proiectului RUMUN-FACTOR: YouTube, Instagram, TikTok, Facebook.</div>
+          </div>
+        </div>
+        <div class="prize-benefit">
+          <div class="prize-benefit-icon">🎬</div>
+          <div class="prize-benefit-body">
+            <div class="prize-benefit-title">Prezență pe scenă</div>
+            <div class="prize-benefit-desc">Apariție în producțiile video și prestații alături de trupa RUMUN.</div>
+          </div>
+        </div>
+      </div>
 
       <p class="prize-note">
         Premiul este acordat unui singur câștigător sau grup câștigător, la decizia juriului și a organizatorilor.
@@ -270,7 +263,7 @@
             <span class="faq-icon"></span>
           </button>
           <div class="faq-answer">
-            <p>Durata 1–3 minute, format MP4 sau MOV. Poți încărca fișierul (până la 500 MB) sau trimite un link YouTube ori Google Drive. Videoclipul trebuie să îți prezinte talentul — fără montaj complex.</p>
+            <p>Durata 1–3 minute. Trimite un link către videoclipul tău pe YouTube, TikTok, Instagram, Google Drive sau Vimeo. Videoclipul trebuie să îți prezinte talentul — fără montaj complex.</p>
           </div>
         </div>
 
@@ -413,29 +406,11 @@
             <div class="form-row form-row--full">
               <div class="field" id="f-video">
                 <label>
-                  Link YouTube / Google Drive
-                  <span class="label-hint">sau încarcă fișierul mai jos</span>
+                  Link video <span class="required">*</span>
+                  <span class="label-hint">YouTube, TikTok, Instagram, Google Drive sau Vimeo</span>
                 </label>
                 <input type="url" id="videourl" placeholder="https://youtube.com/watch?v=...">
-                <div class="field-error">Adaugă un link sau încarcă un fișier</div>
-              </div>
-            </div>
-
-            <div class="video-divider"><span>— sau —</span></div>
-
-            <div class="form-row form-row--full">
-              <div class="field field--file" id="f-videofile">
-                <label>
-                  Încarcă fișier
-                  <span class="label-hint">(MP4/MOV, max. 500 MB, 1–3 min)</span>
-                </label>
-                <div class="file-drop" id="fileDrop">
-                  <input type="file" id="videofile" accept="video/mp4,video/quicktime">
-                  <div class="file-drop-content" id="fileDropText">
-                    <span class="file-drop-icon">↑</span>
-                    <span>Apasă sau trage fișierul aici</span>
-                  </div>
-                </div>
+                <div class="field-error">Adaugă un link valid (YouTube, TikTok, Instagram, Google Drive sau Vimeo)</div>
               </div>
             </div>
           </div>
@@ -519,40 +494,39 @@
        ============================================================ -->
   <footer id="site-footer">
     <div class="footer-inner">
-      <div class="footer-top">
 
-        <div class="footer-brand">
-          <div class="nav-logo">RUMUN<span class="nav-logo-dash">-</span>FACTOR</div>
-          <p>Show de talente muzicale în România. Sezonul 1.</p>
-        </div>
-
-        <div class="footer-links">
-          <h4>Navigare</h4>
-          <ul>
-            <li><a href="#about"      data-target="about">Despre show</a></li>
-            <li><a href="#categories" data-target="categories">Categorii</a></li>
-            <li><a href="#prize"      data-target="prize">Premiu</a></li>
-            <li><a href="#how"        data-target="how">Cum participi</a></li>
-            <li><a href="#faq"        data-target="faq">FAQ</a></li>
-            <li><a href="#register"   data-target="register">Înregistrare</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="#" data-link="link-rules"  >Regulamentul concursului</a></li>
-            <li><a href="#" data-link="link-gdpr"   >Politica GDPR</a></li>
-            <li><a href="#" data-link="link-cookie" >Politica de cookies</a></li>
-            <li><a href="#" data-link="link-contact">Contact</a></li>
-          </ul>
-        </div>
-
+      <div class="footer-brand">
+        <div class="nav-logo">RUMUN<span class="nav-logo-dash">-</span>FACTOR</div>
+        <p>Show de talente muzicale în România. Sezonul 1.</p>
       </div>
+
+      <div class="footer-links">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="#about"      data-target="about">Despre show</a></li>
+          <li><a href="#categories" data-target="categories">Categorii</a></li>
+          <li><a href="#prize"      data-target="prize">Premiu</a></li>
+          <li><a href="#how"        data-target="how">Cum participi</a></li>
+          <li><a href="#faq"        data-target="faq">FAQ</a></li>
+          <li><a href="#register"   data-target="register">Înregistrare</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#" data-link="link-rules"  >Regulamentul concursului</a></li>
+          <li><a href="#" data-link="link-gdpr"   >Politica GDPR</a></li>
+          <li><a href="#" data-link="link-cookie" >Politica de cookies</a></li>
+          <li><a href="#" data-link="link-contact">Contact</a></li>
+        </ul>
+      </div>
+
       <div class="footer-bottom">
         <p>© 2025 RUMUN-factor · România · Toate drepturile rezervate</p>
         <div class="gdpr-badge">GDPR compliant · EU Reg. 2016/679</div>
       </div>
+
     </div>
   </footer>
 
